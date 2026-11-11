@@ -290,21 +290,42 @@ ul { margin: 0; padding: 0; }
   max-width: 38rem;
 }
 .hero-panel {
-  background:
-    linear-gradient(180deg, transparent 0 12px, var(--line) 12px 13px, transparent 13px) 0 0 / 100% 48px,
-    var(--paper);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: #a86d2f;
+  background-image: url("/assets/img/hero-court.svg");
+  background-size: cover;
+  background-position: center 18%;
   border: 1px solid var(--line);
   border-radius: 1.25rem;
-  padding: 2.25rem 1.75rem;
+  padding: 2.25rem 1.75rem 1.85rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   box-shadow: var(--shadow);
 }
+.hero-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      rgba(255, 252, 247, 0.16) 0%,
+      rgba(255, 252, 247, 0.04) 42%,
+      rgba(255, 249, 240, 0.78) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-panel img,
+.hero-panel p {
+  position: relative;
+  z-index: 1;
+}
 .hero-panel img { width: 220px; height: 220px; margin-bottom: 1.1rem; }
 .hero-panel p {
-  color: var(--muted);
+  color: var(--ink);
   font-size: 0.95rem;
   margin: 0;
   max-width: 18rem;
@@ -737,4 +758,27 @@ ul { margin: 0; padding: 0; }
 [data-theme="dark"] .footer-brand img {
   box-shadow: 0 0 0 1px var(--logo-ring);
   border-radius: 50%;
+}
+
+[data-theme="dark"] .hero-panel::before {
+  background:
+    linear-gradient(180deg,
+      rgba(16, 14, 12, 0.42) 0%,
+      rgba(16, 14, 12, 0.28) 40%,
+      rgba(16, 14, 12, 0.86) 100%);
+}
+[data-theme="dark"] .hero-panel p {
+  color: #f3eee6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .hero-panel::before {
+    background:
+      linear-gradient(180deg,
+        rgba(16, 14, 12, 0.42) 0%,
+        rgba(16, 14, 12, 0.28) 40%,
+        rgba(16, 14, 12, 0.86) 100%);
+  }
+  :root:not([data-theme]) .hero-panel p {
+    color: #f3eee6;
+  }
 }
