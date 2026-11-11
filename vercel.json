@@ -1,20 +1,64 @@
 {
   "headers": [
     {
-      "source": "/assets/(.*)",
+      "source": "/assets/img/:file(.*)\\.(png|ico|jpe?g|webp)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/:path(.*)\\.(css|js|svg)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=600, must-revalidate"
+        }
       ]
     }
   ],
   "redirects": [
-    { "source": "/home", "destination": "/", "permanent": true },
-    { "source": "/home/", "destination": "/", "permanent": true },
-    { "source": "/donate_1", "destination": "/donate", "permanent": true },
-    { "source": "/donate_1/", "destination": "/donate", "permanent": true },
-    { "source": "/contact-us_1", "destination": "/contact-us", "permanent": true },
-    { "source": "/contact-us_1/", "destination": "/contact-us", "permanent": true },
-    { "source": "/youth-sports-referee", "destination": "/youth-sports-officials", "permanent": true },
-    { "source": "/youth-sports-referee/", "destination": "/youth-sports-officials", "permanent": true }
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/home/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/donate_1",
+      "destination": "/donate",
+      "permanent": true
+    },
+    {
+      "source": "/donate_1/",
+      "destination": "/donate",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us_1",
+      "destination": "/contact-us",
+      "permanent": true
+    },
+    {
+      "source": "/contact-us_1/",
+      "destination": "/contact-us",
+      "permanent": true
+    },
+    {
+      "source": "/youth-sports-referee",
+      "destination": "/youth-sports-officials",
+      "permanent": true
+    },
+    {
+      "source": "/youth-sports-referee/",
+      "destination": "/youth-sports-officials",
+      "permanent": true
+    }
   ]
 }
