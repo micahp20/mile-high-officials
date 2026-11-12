@@ -12,7 +12,7 @@ Any static server from the project root works, for example:
 npx serve .
 ```
 
-The contact form on `/contact-us/` is submitted with AJAX to [FormSubmit](https://formsubmit.co). No API key is required. The first submission sends an activation email to `admin@milehighofficials.com`; later submissions are delivered to that inbox.
+The contact form on `/contact-us/` is submitted with AJAX to [FormSubmit](https://formsubmit.co). After a successful submission, visitors are sent to `/thank-you/`. No API key is required. The first submission sends an activation email to `admin@milehighofficials.com`; later submissions are delivered to that inbox.
 
 ## Contact form email
 
@@ -35,5 +35,6 @@ Every page has a light/dark toggle in the header. The choice is stored in `local
 - `/youth-sports-officials/youth-football/`
 - `/youth-sports-officials/youth-baseball/`
 - `/contact-us/`
+- `/thank-you/`
 
 Older Google Sites paths redirect to the new URLs.

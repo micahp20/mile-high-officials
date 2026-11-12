@@ -140,7 +140,7 @@ def page(path, title, description, active, content, extra_head=""):
       </div>
     </div>
   </footer>
-  <script src="/assets/js/main.js?v=form2"></script>
+  <script src="/assets/js/main.js?v=form3"></script>
 </body>
 </html>
 """
@@ -892,6 +892,7 @@ page("/contact-us/", "Contact Us",
           <input type="hidden" name="_subject" value="Website contact from Mile High Officials">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://www.milehighofficials.com/thank-you/">
           <div class="hp" aria-hidden="true">
             <label for="company">Company</label>
             <input type="text" id="company" name="_honey" tabindex="-1" autocomplete="off">
@@ -981,7 +982,24 @@ page("/contact-us/", "Contact Us",
     </section>
 """)
 
+
+page("/thank-you/", "Thank you",
+     "Your message to Mile High Officials has been submitted.",
+     "/contact-us/",
+"""    <section class="page-hero">
+      <div class="wrap">
+        <h1>Thank you!</h1>
+        <p class="lead">Your form has been submitted. Someone will contact you within 24–48 hours.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/">Back to home</a>
+        </div>
+      </div>
+    </section>
+""",
+     extra_head='  <meta name="robots" content="noindex, nofollow">\n')
+
 # 404
+
 page("/404.html", "Page not found",
      "The page you are looking for is not on the Mile High Officials website.",
      "/",

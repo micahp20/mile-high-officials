@@ -83,8 +83,7 @@
     e.preventDefault();
     var honey = form.querySelector('[name="_honey"]');
     if (honey && honey.value) {
-      show("ok", "Thanks. We received your message and will get back to you.");
-      form.reset();
+      window.location.href = "/thank-you/";
       return;
     }
 
@@ -124,12 +123,9 @@
         var data = result.data || {};
         var ok = data.success === true || data.success === "true";
         var msg = String(data.message || "");
-        if (ok) {
-          form.reset();
-          show("ok", "Thanks. We received your message and will get back to you.");
-        } else if (/confirm|activat|verification/i.test(msg)) {
-          form.reset();
-          show("ok", "Thanks. Please check the inbox and confirm the first FormSubmit email so messages can be delivered.");
+        if (ok || /confirm|activat|verification/i.test(msg)) {
+          window.location.href = "/thank-you/";
+          return;
         } else {
           show(
             "err",
