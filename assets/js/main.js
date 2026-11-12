@@ -81,13 +81,21 @@
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    if (form.company && form.company.value) return;
+    var honey = form.querySelector('[name="_honey"]');
+    if (honey && honey.value) {
+      show("ok", "Thanks. We received your message and will get back to you.");
+      form.reset();
+      return;
+    }
 
     var payload = {
       name: (form.name.value || "").trim(),
       email: (form.email.value || "").trim(),
       phone: (form.phone.value || "").trim(),
-      message: (form.message.value || "").trim()
+      message: (form.message.value || "").trim(),
+      _subject: "Website contact from " + (form.name.value || "").trim(),
+      _template: "table",
+      _captcha: "false"
     };
 
     if (!payload.name || !payload.email || !payload.message) {
@@ -100,26 +108,32 @@
     status.className = "form-status";
     status.hidden = true;
 
-    fetch("/api/contact", {
+    fetch("https://formsubmit.co/ajax/admin@milehighofficials.com", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(payload)
     })
       .then(function (res) {
         return res.json().then(function (data) {
-          return { ok: res.ok, data: data };
+          return { httpOk: res.ok, data: data };
+        }).catch(function () {
+          return { httpOk: res.ok, data: {} };
         });
       })
       .then(function (result) {
         var data = result.data || {};
-        if (data.ok) {
+        var ok = data.success === true || data.success === "true";
+        var msg = String(data.message || "");
+        if (ok) {
           form.reset();
-          show("ok", data.message || "Thanks. We received your message and will get back to you.");
+          show("ok", "Thanks. We received your message and will get back to you.");
+        } else if (/confirm|activat|verification/i.test(msg)) {
+          form.reset();
+          show("ok", "Thanks. Please check the inbox and confirm the first FormSubmit email so messages can be delivered.");
         } else {
           show(
             "err",
-            data.error ||
-              "We could not send your message just now. Please call 720-432-0354 or email admin@milehighofficials.com."
+            "We could not send your message just now. Please call 720-432-0354 or email admin@milehighofficials.com."
           );
         }
       })

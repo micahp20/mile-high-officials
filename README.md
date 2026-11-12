@@ -12,19 +12,11 @@ Any static server from the project root works, for example:
 npx serve .
 ```
 
-The contact API lives at `/api/contact` and runs on Vercel.
+The contact form on `/contact-us/` is submitted with AJAX to [FormSubmit](https://formsubmit.co). No API key is required. The first submission sends an activation email to `admin@milehighofficials.com`; later submissions are delivered to that inbox.
 
 ## Contact form email
 
-Submissions are emailed to `admin@milehighofficials.com` through [Resend](https://resend.com).
-
-Set these project environment variables on Vercel:
-
-- `RESEND_API_KEY` (required to actually send email)
-- `RESEND_FROM` (optional; defaults to `Mile High Officials <beth.t@example.com>` until the milehighofficials.com domain is verified in Resend)
-- `CONTACT_TO_EMAIL` (optional; defaults to `admin@milehighofficials.com`)
-
-If `RESEND_API_KEY` is missing, the form shows a clear message and the submission is written to the server log instead of failing silently.
+Submissions are emailed to `admin@milehighofficials.com` through FormSubmit. The form includes a honeypot field and shows an on-page success or error message. If FormSubmit provides a random alias after activation, the form endpoint should be updated to that alias so the address is not visible in the page source.
 
 ## Theme
 
