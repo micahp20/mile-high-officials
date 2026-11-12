@@ -16,7 +16,7 @@ The contact form on `/contact-us/` is submitted with AJAX to [FormSubmit](https:
 
 ## Contact form email
 
-Submissions are emailed to `admin@milehighofficials.com` through FormSubmit. The form includes a honeypot field and shows an on-page success or error message. If FormSubmit provides a random alias after activation, the form endpoint should be updated to that alias so the address is not visible in the page source.
+Submissions are emailed to `admin@milehighofficials.com` through FormSubmit. The form includes a honeypot field and shows an on-page success or error message. The form uses FormSubmit's random alias in the endpoint so the inbox address is not visible in the page source.
 
 ## Theme
 

@@ -108,7 +108,7 @@
     status.className = "form-status";
     status.hidden = true;
 
-    fetch("https://formsubmit.co/ajax/admin@milehighofficials.com", {
+    fetch("https://formsubmit.co/ajax/715cffcfd4b9afa81b063f18821de910", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
       body: JSON.stringify(payload)

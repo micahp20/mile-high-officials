@@ -140,7 +140,7 @@ def page(path, title, description, active, content, extra_head=""):
       </div>
     </div>
   </footer>
-  <script src="/assets/js/main.js?v=form1"></script>
+  <script src="/assets/js/main.js?v=form2"></script>
 </body>
 </html>
 """
@@ -886,7 +886,7 @@ page("/contact-us/", "Contact Us",
 
     <section class="section" style="padding-top:0">
       <div class="wrap contact-grid">
-        <form class="form" id="contact-form" action="https://formsubmit.co/admin@milehighofficials.com" method="post" novalidate>
+        <form class="form" id="contact-form" action="https://formsubmit.co/715cffcfd4b9afa81b063f18821de910" method="post" novalidate>
           <h2 style="font-size:1.35rem">Send a message</h2>
           <p class="form-status" role="status" aria-live="polite" hidden></p>
           <input type="hidden" name="_subject" value="Website contact from Mile High Officials">
