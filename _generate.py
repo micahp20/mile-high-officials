@@ -60,8 +60,10 @@ def nav_html(active):
       <a class="nav-cta" href="/contact-us/">Contact Us</a>
     </nav>"""
 
+HOME_TITLE = "Mile High Officials | Nonprofit Sports Officials Training in Colorado"
+
 def page(path, title, description, active, content, extra_head=""):
-    full_title = "Mile High Officials" if title == "Home" else f"{title} | Mile High Officials"
+    full_title = HOME_TITLE if title == "Home" else f"{title} | Mile High Officials"
     html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +75,7 @@ def page(path, title, description, active, content, extra_head=""):
   <meta name="theme-color" content="#d4690f">
   <meta property="og:title" content="{escape(full_title)}">
   <meta property="og:description" content="{escape(description)}">
-  <meta property="og:image" content="/assets/img/logo-mark.png">
+  <meta property="og:image" content="https://www.milehighofficials.com/assets/img/logo-mark-256.png">
   <meta property="og:type" content="website">
   <link rel="icon" href="/assets/img/favicon.ico" sizes="32x32">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png">
@@ -81,7 +83,7 @@ def page(path, title, description, active, content, extra_head=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css?v=court1">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=np1">
   {extra_head}
 </head>
 <body>
@@ -111,7 +113,8 @@ def page(path, title, description, active, content, extra_head=""):
         <div class="footer-brand">
           <img src="/assets/img/logo-mark-256.png" width="64" height="64" alt="Mile High Officials logo">
           <h2>Mile High Officials</h2>
-          <p>Mile High Officials provides professional assigning services and recruits officials for youth basketball, baseball, softball, football, soccer, and wrestling throughout Colorado.</p>
+          <p>Mile High Officials Inc is a 501(c)(3) nonprofit that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado, including basketball, baseball, softball, football, soccer, and wrestling.</p>
+          <p class="footer-legal">501(c)(3) nonprofit · EIN 45-5183098</p>
         </div>
         <div class="footer-col">
           <h3>Quick links</h3>
@@ -119,6 +122,7 @@ def page(path, title, description, active, content, extra_head=""):
           <a href="/about-us/">About Us</a>
           <a href="/board-of-directors/">Board of Directors</a>
           <a href="/donate/">Donate</a>
+          <a href="/privacy-policy/">Privacy Policy</a>
         </div>
         <div class="footer-col">
           <h3>Officials</h3>
@@ -135,12 +139,12 @@ def page(path, title, description, active, content, extra_head=""):
         </div>
       </div>
       <div class="footer-bottom">
-        <div>© 2026 Mile High Officials. All rights reserved.</div>
-        <div>Professional officiating. Strong communication. Reliable game support.</div>
+        <div>© 2026 Mile High Officials Inc. Mile High Officials Inc is a 501(c)(3) nonprofit organization. EIN 45-5183098. Donations are tax-deductible to the extent allowed by law.</div>
+        <div><a href="/privacy-policy/">Privacy Policy</a> · <a href="/contact-us/">Contact</a></div>
       </div>
     </div>
   </footer>
-  <script src="/assets/js/main.js?v=form3"></script>
+  <script src="/assets/js/main.js?v=np1"></script>
 </body>
 </html>
 """
@@ -173,22 +177,22 @@ def cards_html(items, cols="cards"):
 # ----- Pages -----
 
 page("/", "Home",
-     "Mile High Officials is recruiting Colorado basketball officials who want real development, flexible work, and a professional path in the game.",
+     "Mile High Officials Inc is a 501(c)(3) nonprofit that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado.",
      "/",
 """    <section class="hero">
       <div class="wrap hero-grid">
         <div>
-          <p class="eyebrow">Colorado basketball officials wanted</p>
-          <h1>Own the floor. Lead the game.</h1>
-          <p class="lead">Mile High Officials is recruiting people who love basketball, want real development, and are ready to step into a role that demands confidence, professionalism, and presence. This is education with edge: learn the game, command the court, and build a schedule that works for you.</p>
+          <p class="eyebrow">501(c)(3) nonprofit · Colorado</p>
+          <h1>Growing the next generation of sports officials.</h1>
+          <p class="lead">Mile High Officials Inc is a nonprofit that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado. Our mission is to grow and develop the next generation of officials so youth games are safe and well run.</p>
           <div class="actions">
             <a class="btn btn-primary" href="tel:7204320354">Call 720-432-0354</a>
-            <a class="btn btn-secondary" href="/contact-us/">Request more info</a>
+            <a class="btn btn-secondary" href="/contact-us/">Become an official</a>
           </div>
         </div>
         <aside class="hero-panel">
           <img src="/assets/img/logo-mark-256.png" width="220" height="220" alt="Mile High Officials logo">
-          <p>Nationwide shortages mean there is real demand for strong youth basketball officials right now.</p>
+          <p>Nationwide shortages mean youth sports need more trained, prepared officials right now.</p>
         </aside>
       </div>
     </section>
@@ -197,13 +201,13 @@ page("/", "Home",
       <div class="wrap">
         """ + cards_html([
             {"title": "Get trained", "text": "Learn positioning, communication, mechanics, and game management from experienced officials."},
-            {"title": "Get paid", "text": "Turn your basketball knowledge into flexible earning opportunities with meaningful impact."},
+            {"title": "Get mentored", "text": "Grow with guidance from experienced officials who help new referees and umpires build confidence."},
             {"title": "Stay in the game", "text": "Keep your connection to youth sports while helping athletes compete in the right environment."},
             {"title": "Build respect", "text": "Develop discipline, communication, and leadership skills that carry beyond the court."},
         ]) + """
         <div class="actions">
-          <a class="btn btn-primary" href="/contact-us/">Start recruiting me</a>
-          <a class="btn btn-secondary" href="/contact-us/">Get more info</a>
+          <a class="btn btn-primary" href="/contact-us/">Become an official</a>
+          <a class="btn btn-secondary" href="/donate/">Support the mission</a>
         </div>
       </div>
     </section>
@@ -211,7 +215,7 @@ page("/", "Home",
     <section class="section section-alt">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">Hard-core recruiting. Real development.</p>
+          <p class="eyebrow">Recruit. Train. Mentor. Assign.</p>
           <h2>A reputation built on consistency and preparation.</h2>
         </div>
         <div class="stats">
@@ -226,13 +230,13 @@ page("/", "Home",
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Why officials join</p>
-          <h2>More than a side hustle. A basketball lane.</h2>
-          <p>If you want to work hard, grow fast, and stay close to basketball, officiating gives you a path with purpose. Mile High Officials offers flexibility, structure, and a way to lead the game from the best seat in the building.</p>
+          <h2>A path with purpose in youth sports.</h2>
+          <p>If you want to work hard, grow fast, and stay close to the game, officiating gives you a path with purpose. Mile High Officials offers training, structure, and mentorship. Officials are paid for the games they work, and MHO’s program and assigning fees support our nonprofit mission of developing new officials.</p>
         </div>
         """ + cards_html([
             {"num": "01", "title": "Flexible schedule", "text": "Choose assignments that fit your availability and stay active without being locked into a rigid weekly routine."},
             {"num": "02", "title": "Leadership on court", "text": "Officiating builds poise under pressure, clear communication, and the confidence to make difficult decisions in real time."},
-            {"num": "03", "title": "Give back", "text": "Help youth basketball run the right way by creating safer, more organized, and more competitive game environments."},
+            {"num": "03", "title": "Give back", "text": "Help youth sports run the right way by creating safer, more organized, and more competitive game environments."},
         ], "cards cards-3") + """
       </div>
     </section>
@@ -271,36 +275,36 @@ page("/", "Home",
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Simple path in</p>
-          <h2>From basketball fan to trusted official.</h2>
+          <h2>From sports fan to trusted official.</h2>
         </div>
         <div class="steps">
-          <div class="step"><div class="step-num">Step 1</div><h3>Reach out</h3><p>Call or submit an inquiry so MHO can learn your background, availability, and level of basketball experience.</p></div>
+          <div class="step"><div class="step-num">Step 1</div><h3>Reach out</h3><p>Call or submit an inquiry so MHO can learn your background, availability, and sports experience.</p></div>
           <div class="step"><div class="step-num">Step 2</div><h3>Get guided</h3><p>Receive direction on expectations, training, assignments, and what it takes to work games the MHO way.</p></div>
-          <div class="step"><div class="step-num">Step 3</div><h3>Take the floor</h3><p>Start building confidence, earning opportunities, and game presence while serving youth basketball in your community.</p></div>
+          <div class="step"><div class="step-num">Step 3</div><h3>Take the floor</h3><p>Start building confidence and game presence while serving youth sports in your community.</p></div>
         </div>
       </div>
     </section>
 
     <section class="cta-band">
       <div class="wrap">
-        <h2>Basketball needs more strong officials.</h2>
-        <p>If you love the game and want a role with responsibility, development, and real opportunity, Mile High Officials is ready to talk.</p>
+        <h2>Youth sports need more strong officials.</h2>
+        <p>Become an official, or support the training and mentorship that prepare new officials for youth games across Colorado.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="tel:7204320354">Call 720-432-0354 now</a>
-          <a class="btn btn-secondary" href="/contact-us/">Request more info</a>
+          <a class="btn btn-primary" href="/contact-us/">Become an official</a>
+          <a class="btn btn-secondary" href="/donate/">Support the mission</a>
         </div>
       </div>
     </section>
 """)
 
 page("/about-us/", "About Us",
-     "Mile High Officials is a family-owned assigning company serving the Denver Metro area, developing and supplying officials who are fundamentally prepared for every game.",
+     "Mile High Officials Inc is a 501(c)(3) nonprofit (EIN 45-5183098) that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado.",
      "/about-us/",
 """    <section class="page-hero">
       <div class="wrap">
         <p class="eyebrow">About Mile High Officials</p>
         <h1>Built for the game. Driven by standards.</h1>
-        <p class="lead">Mile High Officials is a family-owned assigning company serving the Denver Metro area. The mission is clear: develop, condition, supply, and educate officials so they are fundamentally prepared for every game assignment.</p>
+        <p class="lead">Mile High Officials Inc is a 501(c)(3) nonprofit organization that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado. Our mission is to grow and develop the next generation of sports officials so youth games are safe and well run.</p>
         <p class="lead">This is not just about filling games. It is about building a reliable, professional, and organized sports environment where leagues, tournaments, athletes, and families can trust the people on the floor.</p>
         <div class="actions">
           <a class="btn btn-primary" href="tel:7204320354">Call 720-432-0354</a>
@@ -311,7 +315,14 @@ page("/about-us/", "About Us",
 
     <section class="section" style="padding-top:0">
       <div class="wrap">
-        <div class="stats">
+        <article class="card nonprofit-card" id="nonprofit-status">
+          <div class="card-num">Nonprofit status</div>
+          <h3>Mile High Officials Inc</h3>
+          <p>501(c)(3) nonprofit organization · EIN 45-5183098</p>
+          <p>150 Wells St #582, Erie, CO 80516</p>
+          <p>Program and assigning fees and charitable gifts support our mission of recruiting, training, and mentoring new sports officials. Donations are tax-deductible to the extent allowed by law. <a href="/donate/">Ways to give</a>.</p>
+        </article>
+        <div class="stats" style="margin-top:1.5rem">
           <div class="stat"><strong>8+ years</strong><p>Serving the Denver Metro area with a focus on consistency, preparation, and reputation.</p></div>
           <div class="stat"><strong>250+ officials</strong><p>A large staff of highly qualified officials working high school and collegiate levels.</p></div>
           <div class="stat"><strong>$3M coverage</strong><p>Insurance protection covering contracted officials, staff members, and assigned groups.</p></div>
@@ -323,10 +334,10 @@ page("/about-us/", "About Us",
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Who we are</p>
-          <h2>A strong assigning service with real accountability.</h2>
+          <h2>A mission-driven nonprofit with real accountability.</h2>
         </div>
         """ + cards_html([
-            {"num": "01", "title": "Family owned", "text": "MHO is operated by its founder and built with a hands-on standard of service, communication, and long-term relationships."},
+            {"num": "01", "title": "Mission first", "text": "MHO exists to grow and develop sports officials, with a hands-on standard of training, mentorship, communication, and long-term relationships."},
             {"num": "02", "title": "Professional standards", "text": "Officials are expected to arrive early, know the rules, communicate well, and manage each contest with professionalism."},
             {"num": "03", "title": "Organized support", "text": "From assignments to site supervision, the system is designed to reduce confusion and keep programs running smoothly."},
         ], "cards cards-3") + """
@@ -347,7 +358,7 @@ page("/about-us/", "About Us",
               <li>Reliable assigning services built around consistency.</li>
               <li>Constant communication between clients, assignors, and officials.</li>
               <li>Site supervisors available to address concerns and issues.</li>
-              <li>Affordable and flexible service options based on organizational needs.</li>
+              <li>Program and assigning fees that support our nonprofit mission of developing officials.</li>
               <li>Up-to-date scheduling through Arbiter Sports with 24/7 access.</li>
             </ul>
           </div>
@@ -392,18 +403,18 @@ page("/about-us/", "About Us",
     </section>
 """)
 
-page("/donate/", "Donate",
-     "Support Mile High Officials as we train, mentor, and develop the next generation of youth sports officials across Colorado.",
+page("/donate/", "Support MHO",
+     "Support Mile High Officials Inc, a 501(c)(3) nonprofit that trains and mentors youth sports officials in Colorado. Give by check or send a donation inquiry.",
      "/donate/",
 """    <section class="page-hero">
       <div class="wrap">
-        <p class="eyebrow">Donate to the mission</p>
-        <h1>Empowering youth for a bright future.</h1>
+        <p class="eyebrow">Support the mission</p>
+        <h1>Help grow the next generation of sports officials.</h1>
         <p class="lead">Mile High Officials sees youth sports officiating as more than game coverage. It develops work ethic, discipline, confidence, leadership, and long-term opportunity for young people stepping into responsibility.</p>
         <p class="lead">Your support helps strengthen the pipeline of youth sports officials and supports the training, development, and mentorship that make that path possible.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="/contact-us/">Give today</a>
-          <a class="btn btn-secondary" href="tel:7204320354">Call 720-432-0354</a>
+          <a class="btn btn-primary" href="/contact-us/?topic=donation#contact-form">Send a donation inquiry</a>
+          <a class="btn btn-secondary" href="#give-by-check">Give by check</a>
         </div>
       </div>
     </section>
@@ -465,6 +476,37 @@ page("/donate/", "Donate",
       </div>
     </section>
 
+    <section class="section" id="how-to-give">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">How to give</p>
+          <h2>Ways to support Mile High Officials.</h2>
+          <p>Gifts support the officials pipeline: recruiting new officials, training them in rules and mechanics, and pairing them with experienced mentors so they are ready for youth games. MHO does not take online payments on this website at this time.</p>
+        </div>
+        <div class="split">
+          <div class="list-block" id="give-by-check">
+            <h3>Give by check</h3>
+            <ul class="plain-list">
+              <li>Make your check payable to <strong>Mile High Officials Inc</strong>.</li>
+              <li>Mail it to: Mile High Officials Inc, 150 Wells St #582, Erie, CO 80516.</li>
+              <li>Include your name and email address so we can acknowledge your gift.</li>
+            </ul>
+          </div>
+          <div class="list-block">
+            <h3>Ask about giving</h3>
+            <ul class="plain-list">
+              <li>Have a question about donating or other ways to help? Send us a donation inquiry and we will follow up within 24–48 hours.</li>
+              <li>You can also email <a href="mailto:admin@milehighofficials.com?subject=Donation%20inquiry">admin@milehighofficials.com</a> or call <a href="tel:7204320354">720-432-0354</a>.</li>
+            </ul>
+            <div class="actions">
+              <a class="btn btn-primary" href="/contact-us/?topic=donation#contact-form">Send a donation inquiry</a>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:1.25rem;color:var(--ink-2)">Mile High Officials Inc is a 501(c)(3) nonprofit organization, EIN 45-5183098. Gifts are tax-deductible to the extent allowed by law.</p>
+      </div>
+    </section>
+
     <section class="section section-alt">
       <div class="wrap">
         <div class="section-head">
@@ -482,11 +524,11 @@ page("/donate/", "Donate",
 
     <section class="cta-band">
       <div class="wrap">
-        <h2>Don’t delay. Give today.</h2>
-        <p>Help support the next generation of youth sports officials and invest in the training, guidance, and opportunity that turn sports into a path for growth.</p>
+        <h2>Every gift helps prepare new officials.</h2>
+        <p>Help support the next generation of youth sports officials and the training, guidance, and mentorship that make youth games safe and well run.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="/contact-us/">Support the mission</a>
-          <a class="btn btn-secondary" href="mailto:admin@milehighofficials.com">Email MHO</a>
+          <a class="btn btn-primary" href="/contact-us/?topic=donation#contact-form">Send a donation inquiry</a>
+          <a class="btn btn-secondary" href="#give-by-check">Give by check</a>
         </div>
       </div>
     </section>
@@ -559,14 +601,14 @@ page("/board-of-directors/", "Board of Directors",
 """)
 
 page("/youth-sports-officials/", "Youth Sports Officials",
-     "Mile High Officials is recruiting youth sports referees, umpires, and officials across Colorado. Flexible paid work, training, and a path forward.",
+     "Mile High Officials, a Colorado 501(c)(3) nonprofit, recruits, trains, and mentors youth sports referees, umpires, and officials. Find your path into officiating.",
      "/youth-sports-officials/",
 """    <section class="page-hero">
       <div class="wrap">
         """ + sport_nav("/youth-sports-officials/") + """
         <p class="eyebrow">Youth sports referee recruiting</p>
         <h1>There’s a nationwide shortage of youth sports referees.</h1>
-        <p class="lead">Mile High Officials is recruiting youth sports referees, umpires, and officials across Colorado. If you love sports, want flexible paid work, and are ready to lead with confidence, this is a real opportunity.</p>
+        <p class="lead">Mile High Officials is recruiting youth sports referees, umpires, and officials across Colorado. If you love sports, want to give back, and are ready to lead with confidence, this is a real opportunity. Officials are paid for the games they work.</p>
         <p class="lead">Sports officials play a vital role in shaping the quality of youth athletic programs. It is a challenging job, but when handled the right way, it is rewarding, respected, and deeply connected to the sports you love.</p>
         <div class="actions">
           <a class="btn btn-primary" href="/contact-us/">Become a youth sports official</a>
@@ -632,7 +674,7 @@ page("/youth-sports-officials/", "Youth Sports Officials",
 
     <section class="cta-band">
       <div class="wrap">
-        <h2>Don’t wait. Sports need more strong officials.</h2>
+        <h2>Youth sports need more strong officials.</h2>
         <p>If you are ready to become a youth sports referee, youth sports umpire, or youth sports official in Colorado, contact Mile High Officials today and start the process.</p>
         <div class="actions">
           <a class="btn btn-primary" href="/contact-us/">Request more info</a>
@@ -648,9 +690,9 @@ SPORT_PAGES = {
         title="Youth Basketball Officials",
         kicker="Youth basketball officials",
         h1="Become a youth basketball referee in Colorado.",
-        desc="Mile High Officials is recruiting youth basketball officials and new basketball referees in Colorado. Get trained, get paid, and stay in the game.",
+        desc="Mile High Officials is recruiting youth basketball officials and new basketball referees in Colorado. Get trained, get mentored, and stay in the game.",
         leads=[
-            "Mile High Officials is recruiting youth basketball officials, new basketball referees, and experienced sports officials who want to stay in the game, get trained, and get paid. If you love basketball, there is a place for you here.",
+            "Mile High Officials is recruiting youth basketball officials, new basketball referees, and experienced sports officials who want to stay in the game, get trained, and give back to youth basketball. If you love basketball, there is a place for you here.",
             "We help youth basketball referees build confidence, learn mechanics, improve communication, and step onto the court ready to manage the game the right way.",
         ],
         cta=("Apply to officiate basketball", "mailto:admin@milehighofficials.com?subject=Youth%20Basketball%20Official%20Interest"),
@@ -662,7 +704,7 @@ SPORT_PAGES = {
         why_kicker="Why basketball officials join",
         why_title="The best seat in the gym. The most important job on the floor.",
         why=[
-            {"num": "01", "title": "Get paid to stay in basketball", "text": "Youth basketball officiating keeps you connected to the game while opening up flexible earning opportunities."},
+            {"num": "01", "title": "Stay in basketball", "text": "Youth basketball officiating keeps you connected to the game, and officials are paid for the games they work."},
             {"num": "02", "title": "Develop leadership", "text": "Basketball referees learn communication, confidence, conflict management, and decision-making under pressure."},
             {"num": "03", "title": "Serve the game", "text": "Strong youth basketball officials help create fair, organized, and competitive experiences for players and families."},
         ],
@@ -672,7 +714,7 @@ SPORT_PAGES = {
             "Former players, coaches, parents, students, and sports fans who know the game.",
             "Officials willing to learn rules, mechanics, positioning, and professionalism.",
             "Applicants who can communicate clearly and stay composed under pressure.",
-            "Reliable people who want to grow with a respected assigning organization.",
+            "Reliable people who want to grow with a mission-driven nonprofit.",
         ],
         band_title="Youth basketball needs more strong officials.",
         band_text="If you are ready to become a youth basketball official, basketball referee, or game official in Colorado, contact Mile High Officials today and take the first step.",
@@ -682,16 +724,16 @@ SPORT_PAGES = {
         title="Youth Soccer Referees",
         kicker="Youth soccer referees",
         h1="Become a youth soccer referee in Colorado.",
-        desc="Mile High Officials is recruiting youth soccer referees and soccer officials in Colorado who want flexible work and a strong connection to the sport.",
+        desc="Mile High Officials is recruiting youth soccer referees and soccer officials in Colorado who want to give back and stay connected to the sport.",
         leads=[
-            "Mile High Officials is recruiting youth soccer referees, soccer officials, and new referees who want to stay active in the sport and build a flexible source of income. If you know soccer and want to lead matches with confidence, we want to hear from you.",
+            "Mile High Officials is recruiting youth soccer referees, soccer officials, and new referees who want to stay active in the sport and give back to youth soccer. If you know soccer and want to lead matches with confidence, we want to hear from you.",
             "We help youth soccer officials learn positioning, match control, communication, and professional standards so they can walk onto the field prepared.",
         ],
         cta=("Apply to referee soccer", "mailto:admin@milehighofficials.com?subject=Youth%20Soccer%20Referee%20Interest"),
         highlights=[
             {"title": "Stay in soccer", "text": "Keep your connection to youth soccer while supporting fair, organized competition."},
             {"title": "Learn match control", "text": "Build confidence with rules knowledge, communication, and on-field presence."},
-            {"title": "Flexible income", "text": "Soccer officiating offers a schedule that can work around school, work, and family life."},
+            {"title": "Flexible schedule", "text": "Soccer officiating can fit around school, work, and family life, and referees are paid for the matches they work."},
         ],
         why_kicker="Why soccer officials join",
         why_title="Run the match. Support the game.",
@@ -704,7 +746,7 @@ SPORT_PAGES = {
         looking=[
             "People interested in becoming youth soccer referees in Colorado.",
             "Former soccer players, coaches, fans, students, and parents.",
-            "Applicants who want flexible work and a strong connection to the sport.",
+            "Applicants who want to give back and stay connected to the sport.",
             "Officials ready to learn, communicate, and show professionalism on the field.",
         ],
         band_title="Soccer needs more reliable referees.",
@@ -777,13 +819,13 @@ SPORT_PAGES = {
         h1="Become a youth baseball umpire in Colorado.",
         desc="Mile High Officials is recruiting youth baseball umpires and baseball officials in Colorado. Train on mechanics, positioning, and professional communication.",
         leads=[
-            "Mile High Officials is recruiting youth baseball umpires, baseball officials, and dependable sports-minded people who want to stay involved in baseball while earning income and developing leadership skills.",
+            "Mile High Officials is recruiting youth baseball umpires, baseball officials, and dependable sports-minded people who want to stay involved in baseball, give back to youth sports, and develop leadership skills.",
             "We train youth baseball umpires in rules, positioning, mechanics, game flow, and professional communication so they can step on the field prepared.",
         ],
         cta=("Apply to umpire baseball", "mailto:admin@milehighofficials.com?subject=Youth%20Baseball%20Umpire%20Interest"),
         highlights=[
             {"title": "Baseball mechanics", "text": "Train on plate work, base coverage, positioning, signals, and game control."},
-            {"title": "Flexible paid work", "text": "Baseball umpiring offers schedule flexibility and a strong way to stay in the sport."},
+            {"title": "Flexible schedule", "text": "Baseball umpiring can fit around your schedule, and umpires are paid for the games they work."},
             {"title": "Professional growth", "text": "Develop confidence, communication, and leadership every time you take the field."},
         ],
         why_kicker="Why baseball umpires join",
@@ -887,9 +929,10 @@ page("/contact-us/", "Contact Us",
     <section class="section" style="padding-top:0">
       <div class="wrap contact-grid">
         <form class="form" id="contact-form" action="https://formsubmit.co/715cffcfd4b9afa81b063f18821de910" method="post" novalidate>
-          <h2 style="font-size:1.35rem">Send a message</h2>
+          <h2 style="font-size:1.35rem" id="form-title">Send a message</h2>
           <p class="form-status" role="status" aria-live="polite" hidden></p>
           <input type="hidden" name="_subject" value="Website contact from Mile High Officials">
+          <input type="hidden" name="topic" value="general">
           <input type="hidden" name="_template" value="table">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_next" value="https://www.milehighofficials.com/thank-you/">
@@ -914,6 +957,7 @@ page("/contact-us/", "Contact Us",
             <textarea id="message" name="message" required maxlength="4000" placeholder="Tell us about officiating interest, assigning needs, or a question."></textarea>
           </div>
           <button class="btn btn-primary" type="submit">Send message</button>
+          <p class="form-note">We use your information only to respond to you. See our <a href="/privacy-policy/">Privacy Policy</a>.</p>
         </form>
 
         <aside class="contact-aside">
@@ -964,7 +1008,8 @@ page("/contact-us/", "Contact Us",
             <li>Your organization needs officials for basketball, baseball, football, or soccer.</li>
             <li>You want more information about MHO assigning services.</li>
             <li>You need a dependable contact for officiating support and coordination.</li>
-            <li>You want to connect with a sports assigning company that values consistency and professionalism.</li>
+            <li>You want to support MHO’s nonprofit mission with a donation.</li>
+            <li>You want to connect with a nonprofit sports officials organization that values consistency and professionalism.</li>
           </ul>
         </div>
       </div>
@@ -988,8 +1033,8 @@ page("/thank-you/", "Thank you",
      "/contact-us/",
 """    <section class="page-hero">
       <div class="wrap">
-        <h1>Thank you!</h1>
-        <p class="lead">Your form has been submitted. Someone will contact you within 24–48 hours.</p>
+        <h1>Thank you</h1>
+        <p class="lead">Thank you, your form has been submitted. Someone will contact you within 24–48 hours.</p>
         <div class="actions">
           <a class="btn btn-primary" href="/">Back to home</a>
         </div>
@@ -997,6 +1042,50 @@ page("/thank-you/", "Thank you",
     </section>
 """,
      extra_head='  <meta name="robots" content="noindex, nofollow">\n')
+
+page("/privacy-policy/", "Privacy Policy",
+     "How Mile High Officials Inc collects and uses the information you share through our website contact form, email, phone, and mailed gifts.",
+     "/privacy-policy/",
+"""    <section class="page-hero">
+      <div class="wrap">
+        <p class="eyebrow">Privacy Policy</p>
+        <h1>Your privacy matters to us.</h1>
+        <p class="lead">This policy explains what information Mile High Officials Inc collects through this website and how we use it. Effective November 13, 2026.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap prose">
+        <h2>Who we are</h2>
+        <p>Mile High Officials Inc is a 501(c)(3) nonprofit organization (EIN 45-5183098) located at 150 Wells St #582, Erie, CO 80516. We recruit, train, mentor, and assign sports officials for youth and amateur sports in Colorado.</p>
+
+        <h2>Information we collect</h2>
+        <p>When you use our contact form, we collect the information you enter: your name, email address, phone number (optional), and message. If you email us, call us, or mail us a check, we receive the information you choose to share, such as your name, contact details, and gift amount.</p>
+        <p>This website does not require an account and does not take online payments.</p>
+
+        <h2>How we use your information</h2>
+        <p>We use the information you send only to respond to your inquiry, such as answering questions about becoming an official, assigning services, or donations, and to acknowledge gifts we receive.</p>
+
+        <h2>Sharing</h2>
+        <p>We never sell, rent, or trade your personal information. Contact form messages are delivered to our inbox through FormSubmit, a form delivery service, and this website is hosted by Vercel. These providers handle data only to deliver the website and your message. We may disclose information if required by law.</p>
+
+        <h2>Cookies and similar technologies</h2>
+        <p>This website saves your light or dark theme choice in your browser’s local storage. Fonts are loaded from Google Fonts, which receives standard request information such as your IP address. Our hosting provider keeps standard server logs. If we add analytics or advertising measurement tools in the future, we will update this policy before doing so.</p>
+
+        <h2>Children</h2>
+        <p>This website is intended for adults and is not directed to children under 13. Young people interested in officiating should contact us with a parent or guardian.</p>
+
+        <h2>Your choices</h2>
+        <p>You can ask us to update or delete the information you have sent us at any time by emailing <a href="mailto:admin@milehighofficials.com">admin@milehighofficials.com</a>.</p>
+
+        <h2>Contact us</h2>
+        <p>Questions about this policy? Email <a href="mailto:admin@milehighofficials.com">admin@milehighofficials.com</a>, call <a href="tel:7204320354">720-432-0354</a>, or write to Mile High Officials Inc, 150 Wells St #582, Erie, CO 80516.</p>
+
+        <h2>Changes to this policy</h2>
+        <p>We may update this policy from time to time. The effective date above shows when it was last changed.</p>
+      </div>
+    </section>
+""")
 
 # 404
 

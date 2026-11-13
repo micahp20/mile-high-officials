@@ -782,3 +782,14 @@ ul { margin: 0; padding: 0; }
     color: #f3eee6;
   }
 }
+
+/* ---------- Nonprofit + privacy ---------- */
+.footer-brand .footer-legal { margin-top: 0.6rem; color: #ece8e1; font-weight: 600; font-size: 0.9rem; }
+.footer-bottom a { color: var(--footer-muted); }
+.footer-bottom a:hover { color: #fff; }
+.form-note { margin: 0.75rem 0 0; font-size: 0.9rem; color: var(--ink-2); }
+.nonprofit-card p { margin: 0 0 0.5rem; }
+.prose { max-width: 46rem; }
+.prose h2 { font-size: 1.3rem; margin: 1.75rem 0 0.5rem; }
+.prose h2:first-child { margin-top: 0; }
+.prose p { color: var(--ink-2); margin: 0 0 0.9rem; }

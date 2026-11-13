@@ -71,6 +71,19 @@
   if (!form) return;
 
   var status = form.querySelector(".form-status");
+  var topic = "general";
+  try {
+    topic = new URLSearchParams(window.location.search).get("topic") === "donation" ? "donation" : "general";
+  } catch (e) {}
+  if (topic === "donation") {
+    var title = document.getElementById("form-title");
+    if (title) title.textContent = "Send a donation inquiry";
+    var topicField = form.querySelector('[name="topic"]');
+    if (topicField) topicField.value = "donation";
+    if (form.message && !form.message.value) {
+      form.message.value = "I would like to learn more about making a donation to support Mile High Officials.";
+    }
+  }
   var submit = form.querySelector("[type=submit]");
 
   function show(type, message) {
@@ -92,7 +105,8 @@
       email: (form.email.value || "").trim(),
       phone: (form.phone.value || "").trim(),
       message: (form.message.value || "").trim(),
-      _subject: "Website contact from " + (form.name.value || "").trim(),
+      topic: topic === "donation" ? "Donation inquiry" : "General inquiry",
+      _subject: (topic === "donation" ? "Donation inquiry from " : "Website contact from ") + (form.name.value || "").trim(),
       _template: "table",
       _captcha: "false"
     };
