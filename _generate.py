@@ -62,6 +62,15 @@ def nav_html(active):
 
 HOME_TITLE = "Mile High Officials | Nonprofit Sports Officials Training in Colorado"
 
+GTAG = """  <script async src="https://www.googletagmanager.com/gtag/js?id=G-36Q1TS3G0M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-36Q1TS3G0M');
+    gtag('config', 'AW-830189329');
+  </script>"""
+
 def page(path, title, description, active, content, extra_head=""):
     full_title = HOME_TITLE if title == "Home" else f"{title} | Mile High Officials"
     html = f"""<!DOCTYPE html>
@@ -84,6 +93,7 @@ def page(path, title, description, active, content, extra_head=""):
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/styles.css?v=np2">
+{GTAG}
   {extra_head}
 </head>
 <body>
@@ -1041,7 +1051,12 @@ page("/thank-you/", "Thank you",
       </div>
     </section>
 """,
-     extra_head='  <meta name="robots" content="noindex, nofollow">\n')
+     extra_head='''  <meta name="robots" content="noindex, nofollow">
+  <script>
+    gtag('event','conversion',{'send_to':'AW-830189329/Mf7lCP6cu7gdEJHe7osD'});
+    gtag('event','generate_lead');
+  </script>
+''')
 
 page("/privacy-policy/", "Privacy Policy",
      "How Mile High Officials Inc collects and uses the information you share through our website contact form, email, phone, and mailed gifts.",
@@ -1050,7 +1065,7 @@ page("/privacy-policy/", "Privacy Policy",
       <div class="wrap">
         <p class="eyebrow">Privacy Policy</p>
         <h1>Your privacy matters to us.</h1>
-        <p class="lead">This policy explains what information Mile High Officials Inc collects through this website and how we use it. Effective November 13, 2026.</p>
+        <p class="lead">This policy explains what information Mile High Officials Inc collects through this website and how we use it. Effective November 14, 2026.</p>
       </div>
     </section>
 
@@ -1070,7 +1085,7 @@ page("/privacy-policy/", "Privacy Policy",
         <p>We never sell, rent, or trade your personal information. Contact form messages are delivered to our inbox through FormSubmit, a form delivery service, and this website is hosted by Vercel. These providers handle data only to deliver the website and your message. We may disclose information if required by law.</p>
 
         <h2>Cookies and similar technologies</h2>
-        <p>This website saves your light or dark theme choice in your browser’s local storage. Fonts are loaded from Google Fonts, which receives standard request information such as your IP address. Our hosting provider keeps standard server logs. If we add analytics or advertising measurement tools in the future, we will update this policy before doing so.</p>
+        <p>This website saves your light or dark theme choice in your browser’s local storage. Fonts are loaded from Google Fonts, which receives standard request information such as your IP address. Our hosting provider keeps standard server logs. We use Google Analytics and Google Ads to understand how visitors use this site and to measure our advertising. Those services may set cookies or use similar technologies and collect standard usage information, such as pages viewed, how you arrived at the site, and whether you completed a form. You can control cookies through your browser settings.</p>
 
         <h2>Children</h2>
         <p>This website is intended for adults and is not directed to children under 13. Young people interested in officiating should contact us with a parent or guardian.</p>
