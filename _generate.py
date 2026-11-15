@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 from pathlib import Path
 from html import escape
+import json
+
+SITE = "https://www.milehighofficials.com"
 
 ROOT = Path(__file__).resolve().parent
 
@@ -34,7 +37,59 @@ SPORTS = [
     ("/youth-sports-officials/youth-wrestling/", "Wrestling"),
     ("/youth-sports-officials/youth-football/", "Football"),
     ("/youth-sports-officials/youth-baseball/", "Baseball"),
+    ("/youth-sports-officials/youth-volleyball/", "Volleyball"),
+    ("/youth-sports-officials/youth-flag-football/", "Flag Football"),
 ]
+
+ORG = {
+    "@type": "NGO",
+    "@id": SITE + "/#organization",
+    "name": "Mile High Officials Inc",
+    "alternateName": "Mile High Officials",
+    "url": SITE + "/",
+    "logo": SITE + "/assets/img/logo-mark-256.png",
+    "email": "admin@milehighofficials.com",
+    "telephone": "+1-720-432-0354",
+    "taxID": "45-5183098",
+    "nonprofitStatus": "Nonprofit501c3",
+    "foundingDate": "2008",
+    "areaServed": {"@type": "State", "name": "Colorado"},
+}
+
+def head_seo(path, full_title, description):
+    """Canonical, og:url and JSON-LD for every indexable page."""
+    if path.endswith(".html"):
+        return ""
+    url = SITE + path
+    page_node = {
+        "@type": "WebPage",
+        "@id": url + "#webpage",
+        "url": url,
+        "name": full_title,
+        "description": description,
+        "isPartOf": {"@id": SITE + "/#website"},
+        "publisher": {"@id": SITE + "/#organization"},
+    }
+    graph = [ORG,
+             {"@type": "WebSite", "@id": SITE + "/#website", "url": SITE + "/", "name": "Mile High Officials",
+              "publisher": {"@id": SITE + "/#organization"}},
+             page_node]
+    if path.startswith("/youth-sports-officials/"):
+        crumbs = [("Home", SITE + "/"), ("Youth Sports Officials", SITE + "/youth-sports-officials/")]
+        if path != "/youth-sports-officials/":
+            crumbs.append((full_title.split(" | ")[0], url))
+        page_node["breadcrumb"] = {"@id": url + "#breadcrumb"}
+        graph.append({"@type": "BreadcrumbList", "@id": url + "#breadcrumb", "itemListElement": [
+            {"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(crumbs)]})
+    ld = json.dumps({"@context": "https://schema.org", "@graph": graph}, ensure_ascii=False, indent=2)
+    ld = ld.replace("</", "<\\/")
+    return f"""  <link rel="canonical" href="{url}">
+  <meta property="og:url" content="{url}">
+  <meta property="og:site_name" content="Mile High Officials">
+  <script type="application/ld+json">
+{ld}
+  </script>
+"""
 
 def nav_html(active):
     def item(href, label, key):
@@ -86,7 +141,7 @@ def page(path, title, description, active, content, extra_head=""):
   <meta property="og:description" content="{escape(description)}">
   <meta property="og:image" content="https://www.milehighofficials.com/assets/img/logo-mark-256.png">
   <meta property="og:type" content="website">
-  <link rel="icon" href="/assets/img/favicon.ico" sizes="32x32">
+{head_seo(path, full_title, description)}  <link rel="icon" href="/assets/img/favicon.ico" sizes="32x32">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png">
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -123,7 +178,7 @@ def page(path, title, description, active, content, extra_head=""):
         <div class="footer-brand">
           <img src="/assets/img/logo-mark-256.png" width="64" height="64" alt="Mile High Officials logo">
           <h2>Mile High Officials</h2>
-          <p>Mile High Officials Inc is a 501(c)(3) nonprofit that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado, including basketball, baseball, softball, football, soccer, and wrestling.</p>
+          <p>Mile High Officials Inc is a 501(c)(3) nonprofit that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado, including football, soccer, volleyball, basketball, wrestling, baseball, softball, and flag football.</p>
           <p class="footer-legal">501(c)(3) nonprofit · EIN 45-5183098</p>
         </div>
         <div class="footer-col">
@@ -183,6 +238,30 @@ def cards_html(items, cols="cards"):
         </article>""")
     out.append("      </div>")
     return "\n".join(out)
+
+SEASONS = [
+    ("Fall", "fall", ["youth-football", "youth-soccer", "youth-volleyball"]),
+    ("Winter", "winter", ["youth-basketball", "youth-wrestling"]),
+    ("Spring", "spring", ["youth-baseball", "youth-soccer", "youth-flag-football"]),
+]
+SPORT_LABEL = {h.rstrip("/").split("/")[-1]: l for h, l in SPORTS}
+
+def sport_link(slug):
+    return f'<a href="/youth-sports-officials/{slug}/">{SPORT_LABEL[slug]}</a>'
+
+def season_cards():
+    out = ['<div class="cards cards-3">']
+    for name, _, slugs in SEASONS:
+        links = ", ".join(sport_link(x) for x in slugs[:-1]) + ", and " + sport_link(slugs[-1])
+        out.append(f"""        <article class="card">
+          <div class="card-num">{name}</div>
+          <h3>{name} sports</h3>
+          <p>{links} officials.</p>
+        </article>""")
+    out.append("      </div>")
+    return "\n".join(out)
+
+SEASON_CARDS = season_cards()
 
 # ----- Pages -----
 
@@ -630,7 +709,7 @@ page("/youth-sports-officials/", "Youth Sports Officials",
     <section class="section" style="padding-top:0">
       <div class="wrap">
         """ + cards_html([
-            {"title": "All sports need officials", "text": "Basketball, baseball, football, soccer, softball, and more all depend on trained youth sports referees and umpires."},
+            {"title": "All sports need officials", "text": "Football, soccer, volleyball, basketball, wrestling, baseball, softball, flag football, and more all depend on trained youth sports referees and umpires."},
             {"title": "Flexible work", "text": "Officiating can fit around school, work, family life, and other responsibilities while keeping you close to sports."},
             {"title": "Real growth", "text": "Officials build confidence, communication, decision-making, and leadership under pressure."},
         ], "cards cards-3") + """
@@ -654,6 +733,17 @@ page("/youth-sports-officials/", "Youth Sports Officials",
     <section class="section">
       <div class="wrap">
         <div class="section-head">
+          <p class="eyebrow">Officials by season</p>
+          <h2>Which youth sports need officials, and when.</h2>
+          <p>Mile High Officials recruits and trains officials ahead of each youth sports season in Colorado. Pick the sport you know best.</p>
+        </div>
+        """ + SEASON_CARDS + """
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="wrap">
+        <div class="section-head">
           <p class="eyebrow">Who can become an official</p>
           <h2>You don’t need a perfect background. You need the right mindset.</h2>
         </div>
@@ -668,7 +758,7 @@ page("/youth-sports-officials/", "Youth Sports Officials",
       </div>
     </section>
 
-    <section class="section section-alt">
+    <section class="section">
       <div class="wrap">
         <div class="section-head">
           <p class="eyebrow">Why join Mile High Officials</p>
@@ -856,7 +946,114 @@ SPORT_PAGES = {
         band_text="If you are ready to become a youth baseball umpire or baseball official in Colorado, contact Mile High Officials today.",
         band_primary=("Request more info", "/contact-us/"),
     ),
+    "youth-volleyball": dict(
+        title="Youth Volleyball Officials",
+        kicker="Youth volleyball officials",
+        h1="Become a youth volleyball official in Colorado.",
+        desc="Become a youth volleyball official in Colorado. Mile High Officials is recruiting volleyball referees for the fall season. Get trained and mentored.",
+        leads=[
+            "Mile High Officials is recruiting youth volleyball officials, new volleyball referees, and experienced sports officials in the Denver area and across Colorado who want to stay close to the game. Volleyball is a fall sport for MHO, and officials are paid for the games they work.",
+            "We help youth volleyball officials learn rules, positioning, signals, and match management so they step onto the court prepared and ready to run every set the right way.",
+        ],
+        cta=("Apply to officiate volleyball", "mailto:admin@milehighofficials.com?subject=Youth%20Volleyball%20Official%20Interest"),
+        highlights=[
+            {"title": "Learn the court", "text": "Train on youth volleyball rules, positioning, signals, and match flow with guidance from experienced officials."},
+            {"title": "Work flexible", "text": "Choose matches that fit your schedule while staying connected to the sport you love."},
+            {"title": "Lead with poise", "text": "Build the focus, judgment, and communication needed to manage fast rallies and close sets."},
+        ],
+        why_kicker="Why volleyball officials join",
+        why_title="Every rally needs a steady official.",
+        why=[
+            {"num": "01", "title": "Stay in volleyball", "text": "Youth volleyball officiating keeps former players, coaches, and fans connected to the sport, and officials are paid for the games they work."},
+            {"num": "02", "title": "Develop leadership", "text": "Volleyball officials sharpen judgment, clear communication, and calm decision-making under pressure."},
+            {"num": "03", "title": "Serve the game", "text": "Prepared volleyball officials help create fair, organized, and well-run matches for players and families."},
+        ],
+        looking_title="Who should apply",
+        looking=[
+            "People interested in becoming youth volleyball referees in Colorado.",
+            "Former volleyball players, coaches, parents, students, and fans.",
+            "Applicants willing to learn rules, mechanics, signals, and professionalism.",
+            "Reliable people who communicate clearly and stay composed under pressure.",
+        ],
+        band_title="Volleyball needs more strong officials.",
+        band_text="If you are ready to become a youth volleyball official or volleyball referee in Denver and across Colorado, contact Mile High Officials today and take the first step.",
+        band_primary=("Call 720-432-0354", "tel:7204320354"),
+    ),
+    "youth-flag-football": dict(
+        title="Youth Flag Football Officials",
+        kicker="Youth flag football officials",
+        h1="Become a youth flag football referee in Colorado.",
+        desc="Become a youth flag football referee in Denver and across Colorado. Mile High Officials is recruiting flag football officials for the spring season.",
+        leads=[
+            "Mile High Officials is recruiting youth flag football officials, flag football referees, and game officials in the Denver area and across Colorado. Youth flag football is a spring sport for MHO, and officials are paid for the games they work.",
+            "We help flag football officials learn rules, positioning, signals, and game management so they arrive ready to keep every game fair, safe, and moving.",
+        ],
+        cta=("Apply to officiate flag football", "mailto:admin@milehighofficials.com?subject=Youth%20Flag%20Football%20Official%20Interest"),
+        highlights=[
+            {"title": "Know the rules", "text": "Learn youth flag football rules, positioning, signals, and game flow from experienced officials."},
+            {"title": "Flexible schedule", "text": "Flag football officiating can fit around school, work, and family life while keeping you close to football."},
+            {"title": "Game-day leadership", "text": "Build confidence, clear communication, and control on the field."},
+        ],
+        why_kicker="Why flag football officials join",
+        why_title="Keep the game fair and moving.",
+        why=[
+            {"num": "01", "title": "Stay in football", "text": "Flag football officiating keeps former players, coaches, and fans active in the game they know, and officials are paid for the games they work."},
+            {"num": "02", "title": "Build confidence", "text": "Flag football referees sharpen judgment, communication, and composure every time they take the field."},
+            {"num": "03", "title": "Support young athletes", "text": "Prepared flag football officials help young players learn the game in a safe, organized environment."},
+        ],
+        looking_title="Who should apply",
+        looking=[
+            "People interested in becoming youth flag football referees in Colorado.",
+            "Former football and flag football players, coaches, parents, students, and fans.",
+            "Applicants willing to learn rules, mechanics, signals, and game management.",
+            "Dependable people who want to represent the game with professionalism.",
+        ],
+        band_title="Flag football needs more reliable referees.",
+        band_text="If you are ready to become a flag football referee or youth flag football official in Denver and across Colorado, contact Mile High Officials today.",
+        band_primary=("Call 720-432-0354", "tel:7204320354"),
+    ),
 }
+
+# Season, hire wording and related sports for every sport page
+SPORT_META = {
+    "youth-basketball": dict(noun="basketball officials", related=["youth-volleyball"]),
+    "youth-soccer": dict(noun="soccer referees", related=[]),
+    "youth-wrestling": dict(noun="wrestling officials", related=[]),
+    "youth-football": dict(noun="football officials", related=["youth-flag-football"]),
+    "youth-baseball": dict(noun="baseball umpires", related=[]),
+    "youth-volleyball": dict(noun="volleyball officials", related=["youth-basketball"]),
+    "youth-flag-football": dict(noun="flag football officials", related=["youth-football"]),
+}
+
+def related_section(slug, alt):
+    meta = SPORT_META[slug]
+    label = SPORT_LABEL[slug]
+    seasons = [n for n, _, slugs in SEASONS if slug in slugs]
+    season_txt = " and ".join(x.lower() for x in seasons)
+    others = []
+    for n, _, slugs in SEASONS:
+        if slug in slugs:
+            others += [x for x in slugs if x != slug and x not in others]
+    others += [x for x in meta["related"] if x not in others]
+    other_links = ", ".join(sport_link(x) for x in others[:-1]) + (", and " if len(others) > 2 else " and ") + sport_link(others[-1])
+    sport_word = label.lower()
+    if len(seasons) == 1:
+        season_line = f"{label[0]}{label[1:].lower()} is a {season_txt} sport for Mile High Officials."
+    else:
+        season_line = f"Mile High Officials needs {sport_word} officials in both the {season_txt} seasons."
+    cls = "section section-alt" if alt else "section"
+    return f"""
+    <section class="{cls}">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Season and related sports</p>
+          <h2>When MHO needs {escape(meta['noun'])}.</h2>
+          <p>{season_line} Explore more youth sports officiating: {other_links}, or see the <a href="/youth-sports-officials/">youth sports officials overview</a>.</p>
+          <p>Need {escape(meta['noun'])} for your league, school, or tournament? <a href="/contact-us/">Contact Mile High Officials</a> about assigning services.</p>
+        </div>
+      </div>
+    </section>
+"""
 
 for slug, s in SPORT_PAGES.items():
     href = f"/youth-sports-officials/{slug}/"
@@ -907,7 +1104,7 @@ f"""    <section class="page-hero">
         {cards_html(s['why'], 'cards cards-3' if len(s['why']) > 1 else 'cards')}
       </div>
     </section>
-{looking}
+{looking}{related_section(slug, bool(looking))}
     <section class="cta-band">
       <div class="wrap">
         <h2>{escape(s['band_title'])}</h2>
@@ -1015,7 +1212,7 @@ page("/contact-us/", "Contact Us",
         <div class="list-block">
           <ul class="plain-list">
             <li>You are interested in becoming a youth sports official.</li>
-            <li>Your organization needs officials for basketball, baseball, football, or soccer.</li>
+            <li>Your organization needs officials for football, soccer, volleyball, basketball, wrestling, baseball, or flag football.</li>
             <li>You want more information about MHO assigning services.</li>
             <li>You need a dependable contact for officiating support and coordination.</li>
             <li>You want to support MHO’s nonprofit mission with a donation.</li>

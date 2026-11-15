@@ -34,6 +34,8 @@ Every page has a light/dark toggle in the header. The choice is stored in `local
 - `/youth-sports-officials/youth-wrestling/`
 - `/youth-sports-officials/youth-football/`
 - `/youth-sports-officials/youth-baseball/`
+- `/youth-sports-officials/youth-volleyball/` (fall)
+- `/youth-sports-officials/youth-flag-football/` (spring)
 - `/contact-us/`
 - `/thank-you/` (contact form confirmation)
 - `/privacy-policy/`
