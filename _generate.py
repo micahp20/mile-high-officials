@@ -5,6 +5,10 @@ import json
 
 SITE = "https://www.milehighofficials.com"
 
+# Main MHO phone number for Call buttons. Empty string hides the Call button on sport pages.
+MHO_PHONE = "720-432-0354"
+MHO_TEL = "".join(c for c in MHO_PHONE if c.isdigit())
+
 ROOT = Path(__file__).resolve().parent
 
 BOOT = """<script>
@@ -113,6 +117,7 @@ def nav_html(active):
         </div>
       </div>
       <a class="nav-cta" href="/contact-us/">Contact Us</a>
+      <a class="nav-cta" href="/apply/"{' aria-current="page"' if active == "/apply/" else ""}>Apply</a>
     </nav>"""
 
 HOME_TITLE = "Mile High Officials | Nonprofit Sports Officials Training in Colorado"
@@ -147,7 +152,7 @@ def page(path, title, description, active, content, extra_head=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css?v=np2">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=ap1">
 {GTAG}
   {extra_head}
 </head>
@@ -191,7 +196,7 @@ def page(path, title, description, active, content, extra_head=""):
         </div>
         <div class="footer-col">
           <h3>Officials</h3>
-          <a href="/contact-us/">Become an official</a>
+          <a href="/apply/">Become an official</a>
           <a href="/contact-us/">Request more info</a>
           <a href="mailto:admin@milehighofficials.com">Email MHO</a>
           <a href="tel:7204320354">Call 720-432-0354</a>
@@ -263,6 +268,20 @@ def season_cards():
 
 SEASON_CARDS = season_cards()
 
+APPLY_SLUG = {
+    "youth-basketball": "basketball", "youth-soccer": "soccer", "youth-wrestling": "wrestling",
+    "youth-football": "football", "youth-baseball": "baseball", "youth-volleyball": "volleyball",
+    "youth-flag-football": "flag-football",
+}
+
+def sport_hero_actions(apply_label, sport=None):
+    href = "/apply/" + (f"?sport={sport}" if sport else "")
+    btns = [f'<a class="btn btn-primary" href="{href}">{escape(apply_label)}</a>']
+    if MHO_PHONE:
+        btns.append(f'<a class="btn btn-secondary" href="tel:{MHO_TEL}">Call {escape(MHO_PHONE)}</a>')
+    btns.append('<a class="btn btn-secondary" href="mailto:admin@milehighofficials.com">Email admin@milehighofficials.com</a>')
+    return '<div class="actions">\n          ' + "\n          ".join(btns) + "\n        </div>"
+
 # ----- Pages -----
 
 page("/", "Home",
@@ -276,7 +295,7 @@ page("/", "Home",
           <p class="lead">Mile High Officials Inc is a nonprofit that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado. Our mission is to grow and develop the next generation of officials so youth games are safe and well run.</p>
           <div class="actions">
             <a class="btn btn-primary" href="tel:7204320354">Call 720-432-0354</a>
-            <a class="btn btn-secondary" href="/contact-us/">Become an official</a>
+            <a class="btn btn-secondary" href="/apply/">Become an official</a>
           </div>
         </div>
         <aside class="hero-panel">
@@ -295,7 +314,7 @@ page("/", "Home",
             {"title": "Build respect", "text": "Develop discipline, communication, and leadership skills that carry beyond the court."},
         ]) + """
         <div class="actions">
-          <a class="btn btn-primary" href="/contact-us/">Become an official</a>
+          <a class="btn btn-primary" href="/apply/">Become an official</a>
           <a class="btn btn-secondary" href="/donate/">Support the mission</a>
         </div>
       </div>
@@ -379,7 +398,7 @@ page("/", "Home",
         <h2>Youth sports need more strong officials.</h2>
         <p>Become an official, or support the training and mentorship that prepare new officials for youth games across Colorado.</p>
         <div class="actions">
-          <a class="btn btn-primary" href="/contact-us/">Become an official</a>
+          <a class="btn btn-primary" href="/apply/">Become an official</a>
           <a class="btn btn-secondary" href="/donate/">Support the mission</a>
         </div>
       </div>
@@ -699,10 +718,7 @@ page("/youth-sports-officials/", "Youth Sports Officials",
         <h1>There’s a nationwide shortage of youth sports referees.</h1>
         <p class="lead">Mile High Officials is recruiting youth sports referees, umpires, and officials across Colorado. If you love sports, want to give back, and are ready to lead with confidence, this is a real opportunity. Officials are paid for the games they work.</p>
         <p class="lead">Sports officials play a vital role in shaping the quality of youth athletic programs. It is a challenging job, but when handled the right way, it is rewarding, respected, and deeply connected to the sports you love.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="/contact-us/">Become a youth sports official</a>
-          <a class="btn btn-secondary" href="mailto:admin@milehighofficials.com">Email admin@milehighofficials.com</a>
-        </div>
+        """ + sport_hero_actions("Apply to officiate youth sports") + """
       </div>
     </section>
 
@@ -829,7 +845,7 @@ SPORT_PAGES = {
             "Mile High Officials is recruiting youth soccer referees, soccer officials, and new referees who want to stay active in the sport and give back to youth soccer. If you know soccer and want to lead matches with confidence, we want to hear from you.",
             "We help youth soccer officials learn positioning, match control, communication, and professional standards so they can walk onto the field prepared.",
         ],
-        cta=("Apply to referee soccer", "mailto:admin@milehighofficials.com?subject=Youth%20Soccer%20Referee%20Interest"),
+        cta=("Apply to officiate soccer", "mailto:admin@milehighofficials.com?subject=Youth%20Soccer%20Referee%20Interest"),
         highlights=[
             {"title": "Stay in soccer", "text": "Keep your connection to youth soccer while supporting fair, organized competition."},
             {"title": "Learn match control", "text": "Build confidence with rules knowledge, communication, and on-field presence."},
@@ -922,7 +938,7 @@ SPORT_PAGES = {
             "Mile High Officials is recruiting youth baseball umpires, baseball officials, and dependable sports-minded people who want to stay involved in baseball, give back to youth sports, and develop leadership skills.",
             "We train youth baseball umpires in rules, positioning, mechanics, game flow, and professional communication so they can step on the field prepared.",
         ],
-        cta=("Apply to umpire baseball", "mailto:admin@milehighofficials.com?subject=Youth%20Baseball%20Umpire%20Interest"),
+        cta=("Apply to officiate baseball", "mailto:admin@milehighofficials.com?subject=Youth%20Baseball%20Umpire%20Interest"),
         highlights=[
             {"title": "Baseball mechanics", "text": "Train on plate work, base coverage, positioning, signals, and game control."},
             {"title": "Flexible schedule", "text": "Baseball umpiring can fit around your schedule, and umpires are paid for the games they work."},
@@ -1082,10 +1098,7 @@ f"""    <section class="page-hero">
         <p class="eyebrow">{escape(s['kicker'])}</p>
         <h1>{escape(s['h1'])}</h1>
         {''.join(f'<p class="lead">{escape(t)}</p>' for t in s['leads'])}
-        <div class="actions">
-          <a class="btn btn-primary" href="{s['cta'][1]}">{escape(s['cta'][0])}</a>
-          <a class="btn btn-secondary" href="mailto:admin@milehighofficials.com">Email admin@milehighofficials.com</a>
-        </div>
+        {sport_hero_actions(s['cta'][0], APPLY_SLUG[slug])}
       </div>
     </section>
 
@@ -1262,7 +1275,7 @@ page("/privacy-policy/", "Privacy Policy",
       <div class="wrap">
         <p class="eyebrow">Privacy Policy</p>
         <h1>Your privacy matters to us.</h1>
-        <p class="lead">This policy explains what information Mile High Officials Inc collects through this website and how we use it. Effective November 14, 2026.</p>
+        <p class="lead">This policy explains what information Mile High Officials Inc collects through this website and how we use it. Effective November 15, 2026.</p>
       </div>
     </section>
 
@@ -1273,13 +1286,14 @@ page("/privacy-policy/", "Privacy Policy",
 
         <h2>Information we collect</h2>
         <p>When you use our contact form, we collect the information you enter: your name, email address, phone number (optional), and message. If you email us, call us, or mail us a check, we receive the information you choose to share, such as your name, contact details, and gift amount.</p>
+        <p>When you apply to become an official on our application page, we collect the answers you enter (such as your name, email, phone, city or ZIP code, sports, experience, certifications, references, and training needs) and any résumé you choose to upload.</p>
         <p>This website does not require an account and does not take online payments.</p>
 
         <h2>How we use your information</h2>
         <p>We use the information you send only to respond to your inquiry, such as answering questions about becoming an official, assigning services, or donations, and to acknowledge gifts we receive.</p>
 
         <h2>Sharing</h2>
-        <p>We never sell, rent, or trade your personal information. Contact form messages are delivered to our inbox through FormSubmit, a form delivery service, and this website is hosted by Vercel. These providers handle data only to deliver the website and your message. We may disclose information if required by law.</p>
+        <p>We never sell, rent, or trade your personal information. Contact form messages and application notifications are delivered to our inbox through FormSubmit, a form delivery service. Applications and résumés are stored securely with Supabase, a database provider, and this website is hosted by Vercel. These providers handle data only to deliver the website and your message. We may disclose information if required by law.</p>
 
         <h2>Cookies and similar technologies</h2>
         <p>This website saves your light or dark theme choice in your browser’s local storage. Fonts are loaded from Google Fonts, which receives standard request information such as your IP address. Our hosting provider keeps standard server logs. We use Google Analytics and Google Ads to understand how visitors use this site and to measure our advertising. Those services may set cookies or use similar technologies and collect standard usage information, such as pages viewed, how you arrived at the site, and whether you completed a form. You can control cookies through your browser settings.</p>
@@ -1298,6 +1312,170 @@ page("/privacy-policy/", "Privacy Policy",
       </div>
     </section>
 """)
+
+# ----- Official application -----
+
+APPLY_SPORTS = [("basketball", "Basketball"), ("wrestling", "Wrestling"), ("volleyball", "Volleyball"),
+                ("football", "Football"), ("flag-football", "Flag Football"), ("soccer", "Soccer"),
+                ("baseball", "Baseball"), ("softball", "Softball")]
+
+def yes_no(name, legend, hint=""):
+    h = f'<p class="hint">{hint}</p>' if hint else ""
+    return f"""          <fieldset>
+            <legend>{legend} <span aria-hidden="true">*</span></legend>
+            {h}<div class="choice-row">
+              <label class="choice"><input type="radio" name="{name}" value="yes" required> Yes</label>
+              <label class="choice"><input type="radio" name="{name}" value="no"> No</label>
+            </div>
+          </fieldset>"""
+
+def checks(name, options, cls="choice-grid"):
+    return f'<div class="{cls}">' + "".join(
+        f'\n              <label class="choice"><input type="checkbox" name="{name}" value="{escape(v)}"{(" data-slug=" + chr(34) + slug + chr(34)) if slug else ""}> {escape(l)}</label>'
+        for slug, v, l in options) + "\n            </div>"
+
+APPLY_FORM = f"""    <section class="page-hero">
+      <div class="wrap apply-wrap">
+        <p class="eyebrow">Official application</p>
+        <h1>Apply to become a sports official with Mile High Officials.</h1>
+        <p class="lead">Mile High Officials recruits, trains, and mentors youth sports referees, umpires, and officials across Colorado. This short application takes about three minutes. New officials are welcome, and we offer training.</p>
+        <p class="lead">Questions first? Call <a href="tel:{MHO_TEL}">{MHO_PHONE}</a> or email <a href="mailto:admin@milehighofficials.com">admin@milehighofficials.com</a>.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap apply-wrap">
+        <form class="form apply-form" id="apply-form" action="/api/apply" method="post" enctype="multipart/form-data" novalidate>
+          <p class="form-status" role="status" aria-live="polite" hidden></p>
+          <div class="hp" aria-hidden="true">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="_honey" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="_t" value="">
+          <input type="hidden" name="source_sport" value="">
+
+          <h2>About you</h2>
+          <div class="field">
+            <label for="full_name">Full name *</label>
+            <input id="full_name" name="full_name" type="text" autocomplete="name" required maxlength="120">
+          </div>
+          <div class="field">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" autocomplete="email" required maxlength="160">
+          </div>
+          <div class="field">
+            <label for="phone">Phone *</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" required maxlength="40">
+          </div>
+          <div class="field">
+            <label for="city_zip">City or ZIP code *</label>
+            <input id="city_zip" name="city_zip" type="text" autocomplete="postal-code" required maxlength="80" placeholder="Denver or 80202">
+          </div>
+{yes_no("is_18_plus", "Are you 18 or older?")}
+{yes_no("background_check_ok", "Are you OK with passing a background check?")}
+{yes_no("reliable_transportation", "Do you have reliable transportation?")}
+
+          <h2>What you want to officiate</h2>
+          <fieldset>
+            <legend>Sports you are applying for *</legend>
+            <p class="hint">Check all that apply.</p>
+            {checks("sports", [(slug, l, l) for slug, l in APPLY_SPORTS])}
+            <div class="field sub">
+              <label for="sport_other">Other sport</label>
+              <input id="sport_other" name="sport_other" type="text" maxlength="120">
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Position</legend>
+            <p class="hint">Check all that apply.</p>
+            {checks("positions", [(None, "Referee / umpire / game official", "Referee, umpire, or game official"), (None, "Site supervisor", "Site supervisor")])}
+          </fieldset>
+
+          <h2>Experience</h2>
+{yes_no("has_experience", "Do you have previous officiating experience?")}
+          <div class="field">
+            <label for="experience_details">Experience details</label>
+            <textarea id="experience_details" name="experience_details" maxlength="3000" placeholder="Sports, levels, and years officiated."></textarea>
+          </div>
+          <div class="field">
+            <label for="certifications">Current certifications (optional)</label>
+            <input id="certifications" name="certifications" type="text" maxlength="500" placeholder="For example CHSAA, USSF">
+          </div>
+          <fieldset>
+            <label class="choice"><input type="checkbox" name="wants_training" value="yes" id="wants_training"> I'd like training</label>
+          </fieldset>
+          <div class="training-box" id="training-box" hidden>
+            <fieldset style="margin-bottom:0.8rem">
+              <legend>What training do you need?</legend>
+              {checks("training_needs", [(None, "Rules", "Rules"), (None, "Mechanics and positioning", "Mechanics and positioning"), (None, "Game management", "Game management"), (None, "All of the above", "All of the above")])}
+            </fieldset>
+            <div class="field" style="margin-bottom:0">
+              <label for="training_other">Other training</label>
+              <input id="training_other" name="training_other" type="text" maxlength="300">
+            </div>
+          </div>
+
+          <h2>References and résumé</h2>
+{yes_no("has_references", "Do you have references?")}
+          <div class="field">
+            <label for="references_details">References (optional)</label>
+            <textarea id="references_details" name="references_details" maxlength="2000" placeholder="Names and phone numbers or emails."></textarea>
+          </div>
+          <div class="field">
+            <label for="resume">Résumé (optional)</label>
+            <p class="hint">PDF, DOC, or DOCX, up to 4 MB.</p>
+            <input id="resume" name="resume" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+          </div>
+
+          <h2>One last question</h2>
+          <div class="field">
+            <label for="heard_about">How did you hear about MHO?</label>
+            <select id="heard_about" name="heard_about">
+              <option value="">Choose one</option>
+              <option>Google search</option>
+              <option>Social media</option>
+              <option>Friend or referral</option>
+              <option>School or league</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field" id="heard-other-field" hidden>
+            <label for="heard_other">Please tell us where</label>
+            <input id="heard_other" name="heard_other" type="text" maxlength="200">
+          </div>
+
+          <button class="btn btn-primary" type="submit">Submit application</button>
+          <p class="form-note">We use your information only to review your application and contact you about officiating. See our <a href="/privacy-policy/">Privacy Policy</a>.</p>
+        </form>
+      </div>
+    </section>
+"""
+
+page("/apply/", "Apply to Become a Sports Official",
+     "Apply to become a youth sports referee, umpire, or official in Colorado with Mile High Officials. Basketball, wrestling, volleyball, football, soccer, baseball, and more.",
+     "/apply/", APPLY_FORM,
+     extra_head='<script src="/assets/js/apply.js?v=ap1" defer></script>')
+
+page("/apply/thank-you/", "Application received",
+     "Your application to Mile High Officials has been received.",
+     "/apply/",
+"""    <section class="page-hero">
+      <div class="wrap">
+        <h1>Thank you, your application was received.</h1>
+        <p class="lead">Mile High Officials will review your application and contact you within 2–3 business days about next steps and training.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/youth-sports-officials/">Explore youth sports officiating</a>
+          <a class="btn btn-secondary" href="/">Back to home</a>
+        </div>
+      </div>
+    </section>
+""",
+     extra_head='''  <meta name="robots" content="noindex, nofollow">
+  <script>
+    gtag('event','conversion',{'send_to':'AW-830189329/Mf7lCP6cu7gdEJHe7osD'});
+    gtag('event','generate_lead',{'form':'official_application'});
+  </script>
+''')
 
 # 404
 

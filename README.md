@@ -36,8 +36,24 @@ Every page has a light/dark toggle in the header. The choice is stored in `local
 - `/youth-sports-officials/youth-baseball/`
 - `/youth-sports-officials/youth-volleyball/` (fall)
 - `/youth-sports-officials/youth-flag-football/` (spring)
+- `/apply/` (official application; `?sport=basketball` etc. pre-checks a sport)
+- `/apply/thank-you/` (application confirmation; fires the Google Ads conversion and GA4 `generate_lead`)
 - `/contact-us/`
 - `/thank-you/` (contact form confirmation)
 - `/privacy-policy/`
 
 Older Google Sites paths redirect to the new URLs.
+
+## Official application
+
+`/apply/` posts (multipart) to the Vercel function `api/apply.mjs`, which:
+
+1. Rejects bots quietly (honeypot `_honey` plus a minimum fill time) and validates the answers.
+2. Saves the application, and any résumé (PDF/DOC/DOCX, up to 4 MB), to the separate Supabase project `mho-applications` (tables `applications` and `application_resumes`) through token-checked database functions. The tables are not readable with the public key.
+3. Emails the answers to `admin@milehighofficials.com` through the same FormSubmit endpoint as the contact form, with a private résumé download link (`/api/resume`, signed). If that email fails, the browser sends it as a fallback.
+
+Viewing applications: `/api/applications?key=<MHO_VIEW_KEY>` lists them (mobile-friendly) with résumé links, and `&format=csv` downloads a spreadsheet. They can also be viewed and edited (Status, Notes) in the Supabase Table Editor.
+
+Vercel environment variables: `MHO_SUPABASE_URL`, `MHO_SUPABASE_KEY`, `MHO_DB_TOKEN`, `MHO_LINK_SECRET`, `MHO_VIEW_KEY`.
+
+The main phone number for Call buttons is the `MHO_PHONE` constant in `_generate.py` (empty hides the Call button on sport pages).
