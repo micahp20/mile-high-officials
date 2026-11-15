@@ -3,16 +3,17 @@ import { rpc, sign, safeEqual, esc, yn, VIEW_KEY } from "./_lib.mjs";
 const COLS = [
   ["created_at", "Submitted"], ["full_name", "Name"], ["email", "Email"], ["phone", "Phone"], ["city_zip", "City/ZIP"],
   ["is_18_plus", "18+"], ["background_check_ok", "Background check OK"], ["reliable_transportation", "Transportation"],
-  ["sports", "Sports"], ["sport_other", "Other sport"], ["positions", "Position"], ["has_experience", "Experience"],
+  ["sports", "Sports"], ["sport_other", "Other sport"], ["has_experience", "Experience"],
   ["experience_details", "Experience details"], ["certifications", "Certifications"], ["has_references", "References"],
-  ["references_details", "Reference details"], ["wants_training", "Wants training"], ["training_needs", "Training needed"],
-  ["training_other", "Other training"], ["heard_about", "Heard about MHO"], ["heard_other", "Heard (other)"],
+  ["reference_list", "Reference list"], ["wants_training", "Wants training"], ["training_sports", "Training in sports"],
+  ["heard_about", "Heard about MHO"], ["heard_other", "Heard (other)"],
   ["status", "Status"], ["notes", "Notes"],
 ];
 
 function val(row, k) {
   const v = row[k];
   if (typeof v === "boolean") return yn(v);
+  if (k === "reference_list") return (v || []).map((r, i) => `${i + 1}) ${r.first_name} ${r.last_name}, ${r.phone}, ${r.relationship}`).join("\n");
   if (Array.isArray(v)) return v.join(", ");
   if (k === "created_at") return new Date(v).toLocaleString("en-US", { timeZone: "America/Denver", dateStyle: "medium", timeStyle: "short" }) + " MT";
   return v ?? "";

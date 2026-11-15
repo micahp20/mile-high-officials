@@ -76,7 +76,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css?v=ap2">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=ap3">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-36Q1TS3G0M"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -85,7 +85,7 @@
     gtag('config', 'G-36Q1TS3G0M');
     gtag('config', 'AW-830189329');
   </script>
-  <script src="/assets/js/apply.js?v=ap2" defer></script>
+  <script src="/assets/js/apply.js?v=ap3" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -213,14 +213,6 @@
               <input id="sport_other" name="sport_other" type="text" maxlength="120">
             </div>
           </fieldset>
-          <fieldset>
-            <legend>Position</legend>
-            <p class="hint">Check all that apply.</p>
-            <div class="choice-grid">
-              <label class="choice"><input type="checkbox" name="positions" value="Referee / umpire / game official"> Referee, umpire, or game official</label>
-              <label class="choice"><input type="checkbox" name="positions" value="Site supervisor"> Site supervisor</label>
-            </div>
-          </fieldset>
 
           <h2>Experience</h2>
           <fieldset>
@@ -243,18 +235,19 @@
           </fieldset>
           <div class="training-box" id="training-box" hidden>
             <fieldset style="margin-bottom:0.8rem">
-              <legend>What training do you need?</legend>
+              <legend>Which sport(s) do you want training in?</legend>
+              <p class="hint">Check all that apply. You can train in a sport you don’t officiate yet.</p>
               <div class="choice-grid">
-              <label class="choice"><input type="checkbox" name="training_needs" value="Rules"> Rules</label>
-              <label class="choice"><input type="checkbox" name="training_needs" value="Mechanics and positioning"> Mechanics and positioning</label>
-              <label class="choice"><input type="checkbox" name="training_needs" value="Game management"> Game management</label>
-              <label class="choice"><input type="checkbox" name="training_needs" value="All of the above"> All of the above</label>
+              <label class="choice"><input type="checkbox" name="training_sports" value="Basketball"> Basketball</label>
+              <label class="choice"><input type="checkbox" name="training_sports" value="Wrestling"> Wrestling</label>
+              <label class="choice"><input type="checkbox" name="training_sports" value="Volleyball"> Volleyball</label>
+              <label class="choice"><input type="checkbox" name="training_sports" value="Football"> Football</label>
+              <label class="choice"><input type="checkbox" name="training_sports" value="Flag Football"> Flag Football</label>
+              <label class="choice"><input type="checkbox" name="training_sports" value="Soccer"> Soccer</label>
+              <label class="choice"><input type="checkbox" name="training_sports" value="Baseball"> Baseball</label>
+              <label class="choice"><input type="checkbox" name="training_sports" value="Softball"> Softball</label>
             </div>
             </fieldset>
-            <div class="field" style="margin-bottom:0">
-              <label for="training_other">Other training</label>
-              <input id="training_other" name="training_other" type="text" maxlength="300">
-            </div>
           </div>
 
           <h2>References and résumé</h2>
@@ -265,9 +258,71 @@
               <label class="choice"><input type="radio" name="has_references" value="no"> No</label>
             </div>
           </fieldset>
-          <div class="field">
-            <label for="references_details">References (optional)</label>
-            <textarea id="references_details" name="references_details" maxlength="2000" placeholder="Names and phone numbers or emails."></textarea>
+          <div class="refs" id="refs-box" hidden>
+            <p class="hint">Add up to three references. At least one is required.</p>
+            <fieldset class="ref-block">
+              <legend>Reference 1 *</legend>
+              <div class="ref-grid">
+              <div class="field">
+                <label for="ref1_first">First name</label>
+                <input id="ref1_first" name="ref1_first" type="text" autocomplete="off" maxlength="80">
+              </div>
+              <div class="field">
+                <label for="ref1_last">Last name</label>
+                <input id="ref1_last" name="ref1_last" type="text" autocomplete="off" maxlength="80">
+              </div>
+              <div class="field">
+                <label for="ref1_phone">Phone number</label>
+                <input id="ref1_phone" name="ref1_phone" type="tel" autocomplete="off" maxlength="40">
+              </div>
+              <div class="field">
+                <label for="ref1_relationship">Relationship</label>
+                <input id="ref1_relationship" name="ref1_relationship" type="text" autocomplete="off" maxlength="80">
+              </div>
+              </div>
+            </fieldset>
+            <fieldset class="ref-block">
+              <legend>Reference 2 (optional)</legend>
+              <div class="ref-grid">
+              <div class="field">
+                <label for="ref2_first">First name</label>
+                <input id="ref2_first" name="ref2_first" type="text" autocomplete="off" maxlength="80">
+              </div>
+              <div class="field">
+                <label for="ref2_last">Last name</label>
+                <input id="ref2_last" name="ref2_last" type="text" autocomplete="off" maxlength="80">
+              </div>
+              <div class="field">
+                <label for="ref2_phone">Phone number</label>
+                <input id="ref2_phone" name="ref2_phone" type="tel" autocomplete="off" maxlength="40">
+              </div>
+              <div class="field">
+                <label for="ref2_relationship">Relationship</label>
+                <input id="ref2_relationship" name="ref2_relationship" type="text" autocomplete="off" maxlength="80">
+              </div>
+              </div>
+            </fieldset>
+            <fieldset class="ref-block">
+              <legend>Reference 3 (optional)</legend>
+              <div class="ref-grid">
+              <div class="field">
+                <label for="ref3_first">First name</label>
+                <input id="ref3_first" name="ref3_first" type="text" autocomplete="off" maxlength="80">
+              </div>
+              <div class="field">
+                <label for="ref3_last">Last name</label>
+                <input id="ref3_last" name="ref3_last" type="text" autocomplete="off" maxlength="80">
+              </div>
+              <div class="field">
+                <label for="ref3_phone">Phone number</label>
+                <input id="ref3_phone" name="ref3_phone" type="tel" autocomplete="off" maxlength="40">
+              </div>
+              <div class="field">
+                <label for="ref3_relationship">Relationship</label>
+                <input id="ref3_relationship" name="ref3_relationship" type="text" autocomplete="off" maxlength="80">
+              </div>
+              </div>
+            </fieldset>
           </div>
           <div class="field">
             <label for="resume">Résumé (optional)</label>

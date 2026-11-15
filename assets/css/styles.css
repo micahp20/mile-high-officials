@@ -860,3 +860,9 @@ ul { margin: 0; padding: 0; }
   .nav-cta { padding: 0.55rem 0.7rem !important; }
   .brand-tag { display: none; }
 }
+
+.refs[hidden] { display: none; }
+.ref-block { border: 1px solid var(--line); border-radius: 0.75rem; padding: 0.9rem 1rem 0.1rem; margin: 0 0 0.9rem; }
+.ref-block legend { padding: 0 0.3rem; }
+.ref-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 0.8rem; }
+@media (max-width: 480px) { .ref-grid { grid-template-columns: 1fr; } }

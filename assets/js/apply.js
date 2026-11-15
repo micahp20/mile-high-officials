@@ -26,12 +26,18 @@
     var show = wants.checked || (exp && exp.value === "no");
     trainingBox.hidden = !show;
   }
+  var refsBox = document.getElementById("refs-box");
+  function syncRefs() {
+    refsBox.hidden = radio("has_references") !== "yes";
+  }
   form.addEventListener("change", function (e) {
     var n = e.target && e.target.name;
     if (n === "has_experience" || n === "wants_training") syncTraining();
+    if (n === "has_references") syncRefs();
     if (n === "heard_about") document.getElementById("heard-other-field").hidden = e.target.value !== "Other";
   });
   syncTraining();
+  syncRefs();
 
   function show(type, message) {
     status.className = "form-status is-" + type;
@@ -61,6 +67,10 @@
     need(form.querySelector('input[name="sports"]:checked') || form.sport_other.value.trim(), "at least one sport");
     need(radio("has_experience"), "previous experience");
     need(radio("has_references"), "references");
+    if (radio("has_references") === "yes") {
+      var f1 = form.ref1_first.value.trim(), l1 = form.ref1_last.value.trim(), p1 = form.ref1_phone.value.trim(), r1 = form.ref1_relationship.value.trim();
+      need(f1 && l1 && p1 && r1, "reference 1 (first name, last name, phone, and relationship)");
+    }
     if (missing.length) { show("err", "Please complete: " + missing.join(", ") + "."); return; }
 
     var file = form.resume.files && form.resume.files[0];

@@ -1,8 +1,6 @@
 import { rpc, sign, safeEqual, json, yn } from "./_lib.mjs";
 
 const SPORTS = ["Basketball", "Wrestling", "Volleyball", "Football", "Flag Football", "Soccer", "Baseball", "Softball"];
-const POSITIONS = ["Referee / umpire / game official", "Site supervisor"];
-const TRAINING = ["Rules", "Mechanics and positioning", "Game management", "All of the above"];
 const HEARD = ["Google search", "Social media", "Friend or referral", "School or league", "Other"];
 const MAX_RESUME = 4 * 1024 * 1024;
 const EXT = { pdf: "application/pdf", doc: "application/msword", docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" };
@@ -29,21 +27,23 @@ export async function POST(request) {
     reliable_transportation: b(fd, "reliable_transportation"),
     sports: list(fd, "sports", SPORTS),
     sport_other: s(fd, "sport_other", 120),
-    positions: list(fd, "positions", POSITIONS),
     has_experience: b(fd, "has_experience"),
     experience_details: s(fd, "experience_details", 3000),
     certifications: s(fd, "certifications", 500),
     has_references: b(fd, "has_references"),
-    references_details: s(fd, "references_details", 2000),
+    reference_list: [1, 2, 3].map((n) => ({
+      first_name: s(fd, `ref${n}_first`, 80), last_name: s(fd, `ref${n}_last`, 80),
+      phone: s(fd, `ref${n}_phone`, 40), relationship: s(fd, `ref${n}_relationship`, 80),
+    })).filter((r) => r.first_name || r.last_name || r.phone || r.relationship),
     wants_training: fd.get("wants_training") === "yes" || b(fd, "has_experience") === false,
-    training_needs: list(fd, "training_needs", TRAINING),
-    training_other: s(fd, "training_other", 300),
+    training_sports: list(fd, "training_sports", SPORTS),
     heard_about: HEARD.includes(s(fd, "heard_about")) ? s(fd, "heard_about") : "",
     heard_other: s(fd, "heard_other", 200),
     source_sport: s(fd, "source_sport", 40),
     user_agent: (request.headers.get("user-agent") || "").slice(0, 300),
   };
-  if (!p.wants_training) { p.training_needs = []; p.training_other = ""; }
+  if (!p.wants_training) p.training_sports = [];
+  if (p.has_references !== true) p.reference_list = [];
 
   const missing = [];
   if (!p.full_name) missing.push("full name");
@@ -53,6 +53,10 @@ export async function POST(request) {
   for (const [k, label] of [["is_18_plus", "18 or older"], ["background_check_ok", "background check"], ["reliable_transportation", "transportation"], ["has_experience", "previous experience"], ["has_references", "references"]])
     if (p[k] === null) missing.push(label);
   if (!p.sports.length && !p.sport_other) missing.push("at least one sport");
+  if (p.has_references === true) {
+    const r = p.reference_list[0];
+    if (!r || !r.first_name || !r.last_name || !r.phone || !r.relationship) missing.push("at least one complete reference (first name, last name, phone, and relationship)");
+  }
   if (missing.length) return json({ ok: false, error: "Please complete: " + missing.join(", ") + "." }, 400);
 
   let resumeB64 = null, resumeName = null, resumeType = null;
@@ -88,14 +92,13 @@ export async function POST(request) {
     "OK with background check": yn(p.background_check_ok),
     "Reliable transportation": yn(p.reliable_transportation),
     "Sports": sports,
-    "Position": p.positions.join(", ") || "Not specified",
     "Previous officiating experience": yn(p.has_experience),
     "Experience details": p.experience_details || "-",
     "Certifications": p.certifications || "-",
     "Has references": yn(p.has_references),
-    "References": p.references_details || "-",
+    "References": p.reference_list.map((r, i) => `${i + 1}) ${r.first_name} ${r.last_name}, ${r.phone}, ${r.relationship}`).join("  |  ") || "-",
     "Wants training": yn(p.wants_training),
-    "Training needed": [...p.training_needs, p.training_other && `Other: ${p.training_other}`].filter(Boolean).join(", ") || "-",
+    "Training in sports": p.training_sports.join(", ") || "-",
     "Heard about MHO": [p.heard_about, p.heard_other].filter(Boolean).join(": ") || "-",
     "Résumé": resumeName ? `${origin}/api/resume?id=${id}&sig=${sign(id)}` : "None uploaded",
     "Application ID": id,

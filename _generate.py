@@ -152,7 +152,7 @@ def page(path, title, description, active, content, extra_head=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css?v=ap2">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=ap3">
 {GTAG}
   {extra_head}
 </head>
@@ -1334,6 +1334,25 @@ def checks(name, options, cls="choice-grid"):
         f'\n              <label class="choice"><input type="checkbox" name="{name}" value="{escape(v)}"{(" data-slug=" + chr(34) + slug + chr(34)) if slug else ""}> {escape(l)}</label>'
         for slug, v, l in options) + "\n            </div>"
 
+def ref_block(n):
+    req = " *" if n == 1 else " (optional)"
+    def f(key, label, typ="text", ac="off", mx=80):
+        return f"""              <div class="field">
+                <label for="ref{n}_{key}">{label}</label>
+                <input id="ref{n}_{key}" name="ref{n}_{key}" type="{typ}" autocomplete="{ac}" maxlength="{mx}">
+              </div>"""
+    return f"""            <fieldset class="ref-block">
+              <legend>Reference {n}{req}</legend>
+              <div class="ref-grid">
+{f("first", "First name")}
+{f("last", "Last name")}
+{f("phone", "Phone number", "tel", "off", 40)}
+{f("relationship", "Relationship", "text", "off", 80)}
+              </div>
+            </fieldset>"""
+
+REF_BLOCKS = "\n".join(ref_block(n) for n in (1, 2, 3))
+
 APPLY_FORM = f"""    <section class="page-hero">
       <div class="wrap apply-wrap">
         <p class="eyebrow">Official application</p>
@@ -1385,11 +1404,6 @@ APPLY_FORM = f"""    <section class="page-hero">
               <input id="sport_other" name="sport_other" type="text" maxlength="120">
             </div>
           </fieldset>
-          <fieldset>
-            <legend>Position</legend>
-            <p class="hint">Check all that apply.</p>
-            {checks("positions", [(None, "Referee / umpire / game official", "Referee, umpire, or game official"), (None, "Site supervisor", "Site supervisor")])}
-          </fieldset>
 
           <h2>Experience</h2>
 {yes_no("has_experience", "Do you have previous officiating experience?")}
@@ -1406,20 +1420,17 @@ APPLY_FORM = f"""    <section class="page-hero">
           </fieldset>
           <div class="training-box" id="training-box" hidden>
             <fieldset style="margin-bottom:0.8rem">
-              <legend>What training do you need?</legend>
-              {checks("training_needs", [(None, "Rules", "Rules"), (None, "Mechanics and positioning", "Mechanics and positioning"), (None, "Game management", "Game management"), (None, "All of the above", "All of the above")])}
+              <legend>Which sport(s) do you want training in?</legend>
+              <p class="hint">Check all that apply. You can train in a sport you don’t officiate yet.</p>
+              {checks("training_sports", [(None, l, l) for slug, l in APPLY_SPORTS])}
             </fieldset>
-            <div class="field" style="margin-bottom:0">
-              <label for="training_other">Other training</label>
-              <input id="training_other" name="training_other" type="text" maxlength="300">
-            </div>
           </div>
 
           <h2>References and résumé</h2>
 {yes_no("has_references", "Do you have references?")}
-          <div class="field">
-            <label for="references_details">References (optional)</label>
-            <textarea id="references_details" name="references_details" maxlength="2000" placeholder="Names and phone numbers or emails."></textarea>
+          <div class="refs" id="refs-box" hidden>
+            <p class="hint">Add up to three references. At least one is required.</p>
+{REF_BLOCKS}
           </div>
           <div class="field">
             <label for="resume">Résumé (optional)</label>
@@ -1454,7 +1465,7 @@ APPLY_FORM = f"""    <section class="page-hero">
 page("/apply/", "Apply to Become a Sports Official",
      "Apply to become a youth sports referee, umpire, or official in Colorado with Mile High Officials. Basketball, wrestling, volleyball, football, soccer, baseball, and more.",
      "/apply/", APPLY_FORM,
-     extra_head='<script src="/assets/js/apply.js?v=ap2" defer></script>')
+     extra_head='<script src="/assets/js/apply.js?v=ap3" defer></script>')
 
 page("/apply/thank-you/", "Application received",
      "Your application to Mile High Officials has been received.",
