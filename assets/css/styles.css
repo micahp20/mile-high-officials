@@ -850,3 +850,13 @@ ul { margin: 0; padding: 0; }
   margin: 0 0 1.4rem;
 }
 .training-box[hidden] { display: none; }
+
+@media (min-width: 881px) {
+  .nav a, .drop-btn { white-space: nowrap; }
+}
+@media (min-width: 881px) and (max-width: 1080px) {
+  .nav { gap: 0; }
+  .nav a, .drop-btn { padding-left: 0.45rem; padding-right: 0.45rem; font-size: 0.86rem; }
+  .nav-cta { padding: 0.55rem 0.7rem !important; }
+  .brand-tag { display: none; }
+}

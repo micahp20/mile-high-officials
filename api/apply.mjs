@@ -1,4 +1,4 @@
-import { rpc, sign, json, FORMSUBMIT, yn } from "./_lib.mjs";
+import { rpc, sign, safeEqual, json, yn } from "./_lib.mjs";
 
 const SPORTS = ["Basketball", "Wrestling", "Volleyball", "Football", "Flag Football", "Soccer", "Baseball", "Softball"];
 const POSITIONS = ["Referee / umpire / game official", "Site supervisor"];
@@ -101,19 +101,16 @@ export async function POST(request) {
     "Application ID": id,
   };
 
-  let emailed = false;
-  try {
-    const r = await fetch(FORMSUBMIT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json", Origin: "https://www.milehighofficials.com", Referer: "https://www.milehighofficials.com/apply/" },
-      body: JSON.stringify(email),
-    });
-    const d = await r.json().catch(() => ({}));
-    emailed = r.ok && (d.success === true || d.success === "true");
-    if (!emailed) console.error("formsubmit", r.status, JSON.stringify(d).slice(0, 300));
-  } catch (e) { console.error("formsubmit error", e.message); }
-  if (emailed) { try { await rpc("mho_mark_emailed", { p_id: id }); } catch {} }
+  // FormSubmit only accepts browser requests from the activated site domain (server calls get 403),
+  // so the browser sends this email with the same FormSubmit endpoint the contact form uses,
+  // then calls PATCH /api/apply to record that the email went out.
+  return json({ ok: true, id, emailed: false, email, mark: sign(id) });
+}
 
-  // If the server-side email failed, the browser sends the same email as a fallback.
-  return json({ ok: true, id, emailed, email: emailed ? undefined : email });
+export async function PATCH(request) {
+  const u = new URL(request.url);
+  const id = u.searchParams.get("id") || "";
+  if (!/^[0-9a-f-]{36}$/.test(id) || !safeEqual(u.searchParams.get("sig"), sign(id))) return json({ ok: false }, 404);
+  try { await rpc("mho_mark_emailed", { p_id: id }); } catch { return json({ ok: false }, 500); }
+  return json({ ok: true });
 }

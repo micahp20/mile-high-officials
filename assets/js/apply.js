@@ -93,13 +93,20 @@
           return;
         }
         var done = function () { window.location.href = "/apply/thank-you/"; };
-        if (r.d.emailed || !r.d.email) return done();
-        // Saved, but the server could not send the email: send it from the browser instead.
+        if (!r.d.email) return done();
+        // The application is saved. Now email it to MHO through FormSubmit (same path as the contact form).
         fetch("https://formsubmit.co/ajax/715cffcfd4b9afa81b063f18821de910", {
           method: "POST",
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify(r.d.email)
-        }).then(done, done);
+        })
+          .then(function (res) { return res.json().catch(function () { return {}; }); })
+          .then(function (d) {
+            if (d && (d.success === true || d.success === "true")) {
+              return fetch("/api/apply?id=" + encodeURIComponent(r.d.id) + "&sig=" + encodeURIComponent(r.d.mark), { method: "PATCH" });
+            }
+          })
+          .then(done, done);
       })
       .catch(fail);
   });

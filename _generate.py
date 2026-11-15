@@ -152,7 +152,7 @@ def page(path, title, description, active, content, extra_head=""):
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css?v=ap1">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=ap2">
 {GTAG}
   {extra_head}
 </head>
@@ -1454,7 +1454,7 @@ APPLY_FORM = f"""    <section class="page-hero">
 page("/apply/", "Apply to Become a Sports Official",
      "Apply to become a youth sports referee, umpire, or official in Colorado with Mile High Officials. Basketball, wrestling, volleyball, football, soccer, baseball, and more.",
      "/apply/", APPLY_FORM,
-     extra_head='<script src="/assets/js/apply.js?v=ap1" defer></script>')
+     extra_head='<script src="/assets/js/apply.js?v=ap2" defer></script>')
 
 page("/apply/thank-you/", "Application received",
      "Your application to Mile High Officials has been received.",
