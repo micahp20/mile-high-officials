@@ -164,7 +164,7 @@ def page(path, title, description, active, content, extra_head=""):
         <img src="/assets/img/logo-mark-256.png" width="48" height="48" alt="Mile High Officials logo">
         <span class="brand-text">
           <span class="brand-name">Mile High Officials</span>
-          <span class="brand-tag">Denver, CO · Est. 2008</span>
+          <span class="brand-tag">Colorado · Since 2008</span>
         </span>
       </a>
 {nav_html(active)}
@@ -327,7 +327,7 @@ page("/", "Home",
           <h2>A reputation built on consistency and preparation.</h2>
         </div>
         <div class="stats">
-          <div class="stat"><strong>Founded 2008</strong><p>Mile High Officials was founded in 2008 and continues to build a reputation around consistency, communication, and professionalism.</p></div>
+          <div class="stat"><strong>Since 2008</strong><p>Serving Colorado with a focus on consistency, communication, and professionalism.</p></div>
           <div class="stat"><strong>250+ officials</strong><p>Supported by a deep network of qualified officials working high school and collegiate levels.</p></div>
           <div class="stat"><strong>Game ready</strong><p>Training, standards, site supervision, and assignment support built to prepare officials for each game.</p></div>
         </div>
@@ -431,7 +431,7 @@ page("/about-us/", "About Us",
           <p>Program and assigning fees and charitable gifts support our mission of recruiting, training, and mentoring new sports officials. Donations are tax-deductible to the extent allowed by law. <a href="/donate/">Ways to give</a>.</p>
         </article>
         <div class="stats" style="margin-top:1.5rem">
-          <div class="stat"><strong>Founded 2008</strong><p>Mile High Officials was founded in 2008 and continues to focus on consistency, preparation, and reputation.</p></div>
+          <div class="stat"><strong>Since 2008</strong><p>Serving Colorado with a focus on consistency, preparation, and reputation.</p></div>
           <div class="stat"><strong>250+ officials</strong><p>A large staff of highly qualified officials working high school and collegiate levels.</p></div>
           <div class="stat"><strong>$3M coverage</strong><p>Insurance protection covering contracted officials, staff members, and assigned groups.</p></div>
         </div>
@@ -969,7 +969,7 @@ SPORT_PAGES = {
         h1="Become a youth volleyball official in Colorado.",
         desc="Become a youth volleyball official in Colorado. Mile High Officials is recruiting volleyball referees for the fall season. Get trained and mentored.",
         leads=[
-            "Mile High Officials is recruiting youth volleyball officials, new volleyball referees, and experienced sports officials in the Denver area and across Colorado who want to stay close to the game. Volleyball is a fall sport for MHO, and officials are paid for the games they work.",
+            "Mile High Officials is recruiting youth volleyball officials, new volleyball referees, and experienced sports officials across Colorado who want to stay close to the game. Volleyball is a fall sport for MHO, and officials are paid for the games they work.",
             "We help youth volleyball officials learn rules, positioning, signals, and match management so they step onto the court prepared and ready to run every set the right way.",
         ],
         cta=("Apply to officiate volleyball", "mailto:admin@milehighofficials.com?subject=Youth%20Volleyball%20Official%20Interest"),
@@ -993,16 +993,16 @@ SPORT_PAGES = {
             "Reliable people who communicate clearly and stay composed under pressure.",
         ],
         band_title="Volleyball needs more strong officials.",
-        band_text="If you are ready to become a youth volleyball official or volleyball referee in Denver and across Colorado, contact Mile High Officials today and take the first step.",
+        band_text="If you are ready to become a youth volleyball official or volleyball referee in Colorado, contact Mile High Officials today and take the first step.",
         band_primary=("Call 720-432-0354", "tel:7204320354"),
     ),
     "youth-flag-football": dict(
         title="Youth Flag Football Officials",
         kicker="Youth flag football officials",
         h1="Become a youth flag football referee in Colorado.",
-        desc="Become a youth flag football referee in Denver and across Colorado. Mile High Officials is recruiting flag football officials for the spring season.",
+        desc="Become a youth flag football referee in Colorado. Mile High Officials is recruiting flag football officials for the spring season.",
         leads=[
-            "Mile High Officials is recruiting youth flag football officials, flag football referees, and game officials in the Denver area and across Colorado. Youth flag football is a spring sport for MHO, and officials are paid for the games they work.",
+            "Mile High Officials is recruiting youth flag football officials, flag football referees, and game officials across Colorado. Youth flag football is a spring sport for MHO, and officials are paid for the games they work.",
             "We help flag football officials learn rules, positioning, signals, and game management so they arrive ready to keep every game fair, safe, and moving.",
         ],
         cta=("Apply to officiate flag football", "mailto:admin@milehighofficials.com?subject=Youth%20Flag%20Football%20Official%20Interest"),
@@ -1026,7 +1026,7 @@ SPORT_PAGES = {
             "Dependable people who want to represent the game with professionalism.",
         ],
         band_title="Flag football needs more reliable referees.",
-        band_text="If you are ready to become a flag football referee or youth flag football official in Denver and across Colorado, contact Mile High Officials today.",
+        band_text="If you are ready to become a flag football referee or youth flag football official in Colorado, contact Mile High Officials today.",
         band_primary=("Call 720-432-0354", "tel:7204320354"),
     ),
 }
@@ -1318,7 +1318,7 @@ page("/privacy-policy/", "Privacy Policy",
 
 APPLY_SPORTS = [("basketball", "Basketball"), ("wrestling", "Wrestling"), ("volleyball", "Volleyball"),
                 ("football", "Football"), ("flag-football", "Flag Football"), ("soccer", "Soccer"),
-                ("baseball", "Baseball"), ("softball", "Softball")]
+                ("baseball", "Baseball")]
 
 def yes_no(name, legend, hint=""):
     h = f'<p class="hint">{hint}</p>' if hint else ""
@@ -1358,7 +1358,7 @@ APPLY_FORM = f"""    <section class="page-hero">
       <div class="wrap apply-wrap">
         <p class="eyebrow">Official application</p>
         <h1>Apply to become a sports official with Mile High Officials.</h1>
-        <p class="lead">Mile High Officials recruits, trains, and mentors youth sports referees, umpires, and officials across Colorado. This short application takes about three minutes. New officials are welcome, and we offer training.</p>
+        <p class="lead">Mile High Officials recruits, trains, and mentors youth sports referees, umpires, and officials across Colorado. This short application takes about three minutes. New officials are welcome, we offer training, and there is no fee to join Mile High Officials as an official.</p>
         <p class="lead">Questions first? Call <a href="tel:{MHO_TEL}">{MHO_PHONE}</a> or email <a href="mailto:admin@milehighofficials.com">admin@milehighofficials.com</a>.</p>
       </div>
     </section>
@@ -1389,7 +1389,7 @@ APPLY_FORM = f"""    <section class="page-hero">
           </div>
           <div class="field">
             <label for="city_zip">City or ZIP code *</label>
-            <input id="city_zip" name="city_zip" type="text" autocomplete="postal-code" required maxlength="80" placeholder="Denver or 80202">
+            <input id="city_zip" name="city_zip" type="text" autocomplete="postal-code" required maxlength="80" placeholder="Your city or ZIP">
           </div>
 {yes_no("is_18_plus", "Are you 18 or older?")}
 {yes_no("background_check_ok", "Are you OK with passing a background check?")}
