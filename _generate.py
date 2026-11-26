@@ -205,7 +205,7 @@ def page(path, title, description, active, content, extra_head=""):
           <h3>Contact</h3>
           <a href="tel:7204320354">720-432-0354</a>
           <a href="mailto:admin@milehighofficials.com">admin@milehighofficials.com</a>
-          <p>150 Wells St #582<br>Erie, CO 80516</p>
+          <p>Erie, Colorado</p>
         </div>
       </div>
       <div class="footer-bottom">
@@ -427,7 +427,7 @@ page("/about-us/", "About Us",
           <div class="card-num">Nonprofit status</div>
           <h3>Mile High Officials Inc</h3>
           <p>501(c)(3) nonprofit organization · EIN 45-5183098</p>
-          <p>150 Wells St #582, Erie, CO 80516</p>
+          <p>Erie, Colorado</p>
           <p>Program and assigning fees and charitable gifts support our mission of recruiting, training, and mentoring new sports officials. Donations are tax-deductible to the extent allowed by law. <a href="/donate/">Ways to give</a>.</p>
         </article>
         <div class="stats" style="margin-top:1.5rem">
@@ -596,7 +596,7 @@ page("/donate/", "Support MHO",
             <h3>Give by check</h3>
             <ul class="plain-list">
               <li>Make your check payable to <strong>Mile High Officials Inc</strong>.</li>
-              <li>Mail it to: Mile High Officials Inc, 150 Wells St #582, Erie, CO 80516.</li>
+              <li>Email <a href="mailto:admin@milehighofficials.com">admin@milehighofficials.com</a> for mailing details.</li>
               <li>Include your name and email address so we can acknowledge your gift.</li>
             </ul>
           </div>
@@ -1187,10 +1187,9 @@ page("/contact-us/", "Contact Us",
             <p>Call today to become a youth sports official with MHO.</p>
           </article>
           <article class="card" style="margin-top:1rem">
-            <div class="card-num">Office address</div>
-            <h3>150 Wells St #582</h3>
-            <p>Erie, CO 80516</p>
-            <p>Use this address for official business correspondence and organization contact details.</p>
+            <div class="card-num">Location</div>
+            <h3>Erie, Colorado</h3>
+            <p>Serving youth and amateur sports across Colorado. Call or email us for organization contact details.</p>
           </article>
           <article class="card" style="margin-top:1rem">
             <div class="card-num">Email</div>
@@ -1282,7 +1281,7 @@ page("/privacy-policy/", "Privacy Policy",
     <section class="section" style="padding-top:0">
       <div class="wrap prose">
         <h2>Who we are</h2>
-        <p>Mile High Officials Inc is a 501(c)(3) nonprofit organization (EIN 45-5183098) located at 150 Wells St #582, Erie, CO 80516. We recruit, train, mentor, and assign sports officials for youth and amateur sports in Colorado.</p>
+        <p>Mile High Officials Inc is a 501(c)(3) nonprofit organization (EIN 45-5183098) located in Erie, Colorado. We recruit, train, mentor, and assign sports officials for youth and amateur sports in Colorado.</p>
 
         <h2>Information we collect</h2>
         <p>When you use our contact form, we collect the information you enter: your name, email address, phone number (optional), and message. If you email us, call us, or mail us a check, we receive the information you choose to share, such as your name, contact details, and gift amount.</p>
@@ -1305,7 +1304,7 @@ page("/privacy-policy/", "Privacy Policy",
         <p>You can ask us to update or delete the information you have sent us at any time by emailing <a href="mailto:admin@milehighofficials.com">admin@milehighofficials.com</a>.</p>
 
         <h2>Contact us</h2>
-        <p>Questions about this policy? Email <a href="mailto:admin@milehighofficials.com">admin@milehighofficials.com</a>, call <a href="tel:7204320354">720-432-0354</a>, or write to Mile High Officials Inc, 150 Wells St #582, Erie, CO 80516.</p>
+        <p>Questions about this policy? Email <a href="mailto:admin@milehighofficials.com">admin@milehighofficials.com</a>, or call <a href="tel:7204320354">720-432-0354</a>.</p>
 
         <h2>Changes to this policy</h2>
         <p>We may update this policy from time to time. The effective date above shows when it was last changed.</p>
