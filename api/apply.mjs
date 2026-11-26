@@ -1,6 +1,6 @@
 import { rpc, sign, safeEqual, json, yn } from "./_lib.mjs";
 
-const SPORTS = ["Basketball", "Wrestling", "Volleyball", "Football", "Flag Football", "Soccer", "Baseball", "Softball"];
+const SPORTS = ["Basketball", "Wrestling", "Volleyball", "Football", "Flag Football", "Soccer", "Baseball"];
 const HEARD = ["Google search", "Social media", "Friend or referral", "School or league", "Other"];
 const MAX_RESUME = 4 * 1024 * 1024;
 const EXT = { pdf: "application/pdf", doc: "application/msword", docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" };
