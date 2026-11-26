@@ -1,4 +1,4 @@
-import { rpc, sign, safeEqual, json, yn } from "./_lib.mjs";
+import { rpc, sign, safeEqual, json, yn, esc } from "./_lib.mjs";
 
 const SPORTS = ["Basketball", "Wrestling", "Volleyball", "Football", "Flag Football", "Soccer", "Baseball"];
 const HEARD = ["Google search", "Social media", "Friend or referral", "School or league", "Other"];
@@ -104,9 +104,44 @@ export async function POST(request) {
     "Application ID": id,
   };
 
-  // FormSubmit only accepts browser requests from the activated site domain (server calls get 403),
-  // so the browser sends this email with the same FormSubmit endpoint the contact form uses,
-  // then calls PATCH /api/apply to record that the email went out.
+  // Notification email: sent from the server through Resend (verified officialsindex.com domain).
+  // A failed email never blocks the saved application. If Resend fails, the browser falls back to FormSubmit.
+  const RESEND_KEY = process.env.RESEND_API_KEY;
+  if (RESEND_KEY) {
+    try {
+      const resumeLink = resumeName ? `${origin}/api/resume?id=${id}&sig=${sign(id)}` : "";
+      const rows = Object.entries(email).filter(([k]) => !k.startsWith("_"));
+      const html = `<table cellpadding="6" cellspacing="0" style="font-family:-apple-system,Segoe UI,Arial,sans-serif;font-size:14px;border-collapse:collapse">${rows
+        .map(([k, v]) => `<tr><td style="border:1px solid #ddd;background:#f6f4f1;font-weight:600;vertical-align:top">${esc(k)}</td><td style="border:1px solid #ddd">${k === "Résumé" && resumeLink ? `<a href="${esc(resumeLink)}">Download ${esc(resumeName)}</a> (also attached)` : esc(v)}</td></tr>`)
+        .join("")}</table>`;
+      const text = rows.map(([k, v]) => `${k}: ${v}`).join("\n");
+      const payload = {
+        from: "Mile High Officials Applications <applications@officialsindex.com>",
+        to: ["admin@milehighofficials.com"],
+        reply_to: p.email,
+        subject: email._subject,
+        html,
+        text,
+      };
+      if (resumeB64) payload.attachments = [{ filename: resumeName, content: resumeB64 }];
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${RESEND_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: AbortSignal.timeout(12000),
+      });
+      if (res.ok) {
+        try { await rpc("mho_mark_emailed", { p_id: id }); } catch (e) { console.error("mark emailed failed", e.message); }
+        return json({ ok: true, id, emailed: true });
+      }
+      console.error("resend failed", res.status, (await res.text()).slice(0, 200));
+    } catch (e) {
+      console.error("resend error", e.message);
+    }
+  }
+
+  // Fallback only: FormSubmit accepts browser requests only, so the browser sends this email with the same
+  // FormSubmit endpoint the contact form uses, then calls PATCH /api/apply to record that the email went out.
   return json({ ok: true, id, emailed: false, email, mark: sign(id) });
 }
 
