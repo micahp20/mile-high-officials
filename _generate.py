@@ -183,7 +183,7 @@ def page(path, title, description, active, content, extra_head=""):
         <div class="footer-brand">
           <img src="/assets/img/logo-mark-256.png" width="64" height="64" alt="Mile High Officials logo">
           <h2>Mile High Officials</h2>
-          <p>Mile High Officials Inc is a 501(c)(3) nonprofit that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado, including football, soccer, volleyball, basketball, wrestling, baseball, softball, and flag football.</p>
+          <p>Mile High Officials Inc is a 501(c)(3) nonprofit that recruits, trains, mentors, and assigns sports officials for youth and amateur sports in Colorado, including football, soccer, volleyball, basketball, wrestling, baseball, and flag football.</p>
           <p class="footer-legal">501(c)(3) nonprofit · EIN 45-5183098</p>
         </div>
         <div class="footer-col">
@@ -327,7 +327,7 @@ page("/", "Home",
           <h2>A reputation built on consistency and preparation.</h2>
         </div>
         <div class="stats">
-          <div class="stat"><strong>8+ years</strong><p>Serving the Denver Metro area and building a reputation around consistency, communication, and professionalism.</p></div>
+          <div class="stat"><strong>Founded 2008</strong><p>Mile High Officials was founded in 2008 and continues to build a reputation around consistency, communication, and professionalism.</p></div>
           <div class="stat"><strong>250+ officials</strong><p>Supported by a deep network of qualified officials working high school and collegiate levels.</p></div>
           <div class="stat"><strong>Game ready</strong><p>Training, standards, site supervision, and assignment support built to prepare officials for each game.</p></div>
         </div>
@@ -339,7 +339,7 @@ page("/", "Home",
         <div class="section-head">
           <p class="eyebrow">Why officials join</p>
           <h2>A path with purpose in youth sports.</h2>
-          <p>If you want to work hard, grow fast, and stay close to the game, officiating gives you a path with purpose. Mile High Officials offers training, structure, and mentorship. Officials are paid for the games they work, and MHO’s program and assigning fees support our nonprofit mission of developing new officials.</p>
+          <p>If you want to work hard, grow fast, and stay close to the game, officiating gives you a path with purpose. Mile High Officials offers training, structure, and mentorship. Officials are paid for the games they work, and there is no fee to join Mile High Officials as an official. MHO’s program and assigning fees support our nonprofit mission of developing new officials.</p>
         </div>
         """ + cards_html([
             {"num": "01", "title": "Flexible schedule", "text": "Choose assignments that fit your availability and stay active without being locked into a rigid weekly routine."},
@@ -431,7 +431,7 @@ page("/about-us/", "About Us",
           <p>Program and assigning fees and charitable gifts support our mission of recruiting, training, and mentoring new sports officials. Donations are tax-deductible to the extent allowed by law. <a href="/donate/">Ways to give</a>.</p>
         </article>
         <div class="stats" style="margin-top:1.5rem">
-          <div class="stat"><strong>8+ years</strong><p>Serving the Denver Metro area with a focus on consistency, preparation, and reputation.</p></div>
+          <div class="stat"><strong>Founded 2008</strong><p>Mile High Officials was founded in 2008 and continues to focus on consistency, preparation, and reputation.</p></div>
           <div class="stat"><strong>250+ officials</strong><p>A large staff of highly qualified officials working high school and collegiate levels.</p></div>
           <div class="stat"><strong>$3M coverage</strong><p>Insurance protection covering contracted officials, staff members, and assigned groups.</p></div>
         </div>
@@ -473,6 +473,7 @@ page("/about-us/", "About Us",
           <div class="list-block">
             <h3>For officials</h3>
             <ul class="plain-list">
+              <li>There is no fee to join Mile High Officials as an official.</li>
               <li>Clear expectations and monitored professional standards.</li>
               <li>A development-focused environment built around preparation.</li>
               <li>Access to organized assignments and support.</li>
@@ -716,7 +717,7 @@ page("/youth-sports-officials/", "Youth Sports Officials",
         """ + sport_nav("/youth-sports-officials/") + """
         <p class="eyebrow">Youth sports referee recruiting</p>
         <h1>There’s a nationwide shortage of youth sports referees.</h1>
-        <p class="lead">Mile High Officials is recruiting youth sports referees, umpires, and officials across Colorado. If you love sports, want to give back, and are ready to lead with confidence, this is a real opportunity. Officials are paid for the games they work.</p>
+        <p class="lead">Mile High Officials is recruiting youth sports referees, umpires, and officials across Colorado. If you love sports, want to give back, and are ready to lead with confidence, this is a real opportunity. Officials are paid for the games they work. There is no fee to join Mile High Officials as an official.</p>
         <p class="lead">Sports officials play a vital role in shaping the quality of youth athletic programs. It is a challenging job, but when handled the right way, it is rewarding, respected, and deeply connected to the sports you love.</p>
         """ + sport_hero_actions("Apply to officiate youth sports") + """
       </div>
@@ -725,7 +726,7 @@ page("/youth-sports-officials/", "Youth Sports Officials",
     <section class="section" style="padding-top:0">
       <div class="wrap">
         """ + cards_html([
-            {"title": "All sports need officials", "text": "Football, soccer, volleyball, basketball, wrestling, baseball, softball, flag football, and more all depend on trained youth sports referees and umpires."},
+            {"title": "All sports need officials", "text": "Football, soccer, volleyball, basketball, wrestling, baseball, flag football, and more all depend on trained youth sports referees and umpires."},
             {"title": "Flexible work", "text": "Officiating can fit around school, work, family life, and other responsibilities while keeping you close to sports."},
             {"title": "Real growth", "text": "Officials build confidence, communication, decision-making, and leadership under pressure."},
         ], "cards cards-3") + """
@@ -1098,6 +1099,7 @@ f"""    <section class="page-hero">
         <p class="eyebrow">{escape(s['kicker'])}</p>
         <h1>{escape(s['h1'])}</h1>
         {''.join(f'<p class="lead">{escape(t)}</p>' for t in s['leads'])}
+        <p class="lead">There is no fee to join Mile High Officials as an official.</p>
         {sport_hero_actions(s['cta'][0], APPLY_SLUG[slug])}
       </div>
     </section>
