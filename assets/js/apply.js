@@ -105,18 +105,20 @@
         var done = function () { window.location.href = "/apply/thank-you/"; };
         if (!r.d.email) return done();
         // The application is saved. Now email it to MHO through FormSubmit (same path as the contact form).
-        fetch("https://formsubmit.co/ajax/715cffcfd4b9afa81b063f18821de910", {
+        // keepalive lets the email request finish even if the visitor leaves the page; after 8 seconds we move on anyway.
+        var sent = fetch("https://formsubmit.co/ajax/715cffcfd4b9afa81b063f18821de910", {
           method: "POST",
+          keepalive: true,
           headers: { "Content-Type": "application/json", Accept: "application/json" },
           body: JSON.stringify(r.d.email)
         })
           .then(function (res) { return res.json().catch(function () { return {}; }); })
           .then(function (d) {
             if (d && (d.success === true || d.success === "true")) {
-              return fetch("/api/apply?id=" + encodeURIComponent(r.d.id) + "&sig=" + encodeURIComponent(r.d.mark), { method: "PATCH" });
+              return fetch("/api/apply?id=" + encodeURIComponent(r.d.id) + "&sig=" + encodeURIComponent(r.d.mark), { method: "PATCH", keepalive: true });
             }
-          })
-          .then(done, done);
+          });
+        Promise.race([sent, new Promise(function (res) { setTimeout(res, 8000); })]).then(done, done);
       })
       .catch(fail);
   });

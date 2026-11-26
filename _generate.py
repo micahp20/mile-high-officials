@@ -1466,7 +1466,7 @@ APPLY_FORM = f"""    <section class="page-hero">
 page("/apply/", "Apply to Become a Sports Official",
      "Apply to become a youth sports referee, umpire, or official in Colorado with Mile High Officials. Basketball, wrestling, volleyball, football, soccer, baseball, and more.",
      "/apply/", APPLY_FORM,
-     extra_head='<script src="/assets/js/apply.js?v=ap3" defer></script>')
+     extra_head='<script src="/assets/js/apply.js?v=ap4" defer></script>')
 
 page("/apply/thank-you/", "Application received",
      "Your application to Mile High Officials has been received.",
